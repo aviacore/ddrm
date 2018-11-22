@@ -32,6 +32,7 @@ bower_components
 # Build
 build/
 build_webpack/
+dist/
 
 # Dependency directories
 node_modules/
