@@ -195,14 +195,6 @@ contract Core is IERC721Full, Ownable {
     _mint(recipient, totalSupply().add(1), block.timestamp.add(30 days));
   }
 
-  function setActivityPrice(bytes4 activityId, uint256 price)
-    public onlyOwner
-  {
-    require(activityId != 0xffffffff, "invalid activity ID specified");
-
-    _prices[activityId] = price;
-  }
-
   function withdraw() public onlyOwner {
     require(_token.balanceOf(address(this)) > 0,
       "the contract doesn't nave funds to send");
@@ -217,6 +209,14 @@ contract Core is IERC721Full, Ownable {
     _clearApproval(tokenId);
     _removeTokenFrom(ownerOf(tokenId), tokenId);
     _addTokenTo(msg.sender, tokenId);
+  }
+
+  function setActivityPrice(bytes4 activityId, uint256 price)
+    public onlyOwner
+  {
+    require(activityId != 0xffffffff, "invalid activity ID specified");
+
+    _prices[activityId] = price;
   }
 
   function _clearApproval(uint256 tokenId) private {
