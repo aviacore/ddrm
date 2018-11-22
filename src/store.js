@@ -1,40 +1,34 @@
-import createHistory from 'history/createBrowserHistory'
-import { createStore, applyMiddleware, compose } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import { routerMiddleware } from 'react-router-redux'
-import reducer from './reducer'
-import rootSaga from './rootSaga'
-import createSagaMiddleware from 'redux-saga'
-import { generateContractsInitialState } from 'drizzle'
-import drizzleOptions from './drizzleOptions'
+import createHistory from 'history/createBrowserHistory';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import { routerMiddleware } from 'react-router-redux';
+import reducer from './reducer';
+import rootSaga from './rootSaga';
+import createSagaMiddleware from 'redux-saga';
+import { generateContractsInitialState } from 'drizzle';
+import drizzleOptions from './drizzleOptions';
 
 // Redux DevTools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const history = createHistory()
+const history = createHistory();
 
-const routingMiddleware = routerMiddleware(history)
-const sagaMiddleware = createSagaMiddleware()
+const routingMiddleware = routerMiddleware(history);
+const sagaMiddleware = createSagaMiddleware();
 
 const initialState = {
   contracts: generateContractsInitialState(drizzleOptions)
-}
+};
 
 const store = createStore(
   reducer,
   initialState,
-  composeEnhancers(
-    applyMiddleware(
-      thunkMiddleware,
-      routingMiddleware,
-      sagaMiddleware
-    )
-  )
-)
+  composeEnhancers(applyMiddleware(thunkMiddleware, routingMiddleware, sagaMiddleware))
+);
 
-sagaMiddleware.run(rootSaga)
+sagaMiddleware.run(rootSaga);
 
-export { history }
-export { store }
+export { history };
+export { store };
 
-export default store
+export default store;

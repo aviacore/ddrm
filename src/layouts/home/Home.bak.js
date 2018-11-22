@@ -18,11 +18,11 @@ class Home extends Component {
   }
 
   handleSetButton() {
-    this.contracts.SimpleStorage.methods.set(this.state.storageAmount).send()
+    this.contracts.Core.methods.set(this.state.storageAmount).send()
   }
 
   handleSendTokens() {
-    this.contracts.TutorialToken.methods.transfer(this.state.tokenRecipientAddress, this.state.tokenTransferAmount).send()
+    this.contracts.ERC20Token.methods.transfer(this.state.tokenRecipientAddress, this.state.tokenTransferAmount).send()
   }
 
   handleInputChange(event) {
@@ -30,13 +30,13 @@ class Home extends Component {
   }
 
   render() {
-    // SimpleStorage Vars
-    var storedData = this.props.drizzleStatus.initialized ? this.contracts.SimpleStorage.methods.storedData.data() : 'Loading...'
+    // Core Vars
+    var storedData = this.props.drizzleStatus.initialized ? this.contracts.Core.methods.storedData.data() : 'Loading...'
 
-    // TutorialToken Vars
-    var tokenSymbol = this.props.drizzleStatus.initialized ? this.contracts.TutorialToken.methods.symbol.data() : ''
-    var tokenSupply = this.props.drizzleStatus.initialized ? this.contracts.TutorialToken.methods.totalSupply.data() : 'Loading...'
-    var tokenBalance = this.props.drizzleStatus.initialized ? this.contracts.TutorialToken.methods.balanceOf.data(this.props.accounts[0]) : 'Loading...'
+    // ERC20Token Vars
+    var tokenSymbol = this.props.drizzleStatus.initialized ? this.contracts.ERC20Token.methods.symbol.data() : ''
+    var tokenSupply = this.props.drizzleStatus.initialized ? this.contracts.ERC20Token.methods.totalSupply.data() : 'Loading...'
+    var tokenBalance = this.props.drizzleStatus.initialized ? this.contracts.ERC20Token.methods.balanceOf.data(this.props.accounts[0]) : 'Loading...'
 
     return(
       <main className="container">
@@ -47,7 +47,7 @@ class Home extends Component {
           </div>
 
           <div className="pure-u-1-1">
-            <h2>SimpleStorage</h2>
+            <h2>Core</h2>
             <p><strong>Stored Value</strong>: {storedData}</p>
             <form className="pure-form pure-form-stacked">
               <input name="storageAmount" type="number" value={this.state.storageAmount} onChange={this.handleInputChange} />
@@ -58,7 +58,7 @@ class Home extends Component {
           </div>
 
           <div className="pure-u-1-1">
-            <h2>TutorialToken</h2>
+            <h2>ERC20Token</h2>
             <p><strong>Total Supply</strong>: {tokenSupply} {tokenSymbol}</p>
             <p><strong>My Balance</strong>: {tokenBalance}</p>
             <h3>Send Tokens</h3>
