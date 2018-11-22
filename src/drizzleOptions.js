@@ -1,6 +1,5 @@
-import ComplexStorage from './../build/contracts/ComplexStorage.json'
-import SimpleStorage from './../build/contracts/SimpleStorage.json'
-import TutorialToken from './../build/contracts/TutorialToken.json'
+import Core from './../build/contracts/Core.json';
+import IERC20 from 'openzeppelin-solidity/build/contracts/IERC20.json';
 
 const drizzleOptions = {
   web3: {
@@ -10,17 +9,13 @@ const drizzleOptions = {
       url: 'ws://127.0.0.1:8545'
     }
   },
-  contracts: [
-    ComplexStorage,
-    SimpleStorage,
-    TutorialToken
-  ],
+  contracts: [Core, IERC20],
   events: {
     SimpleStorage: ['StorageSet']
   },
   polls: {
     accounts: 1500
   }
-}
+};
 
-export default drizzleOptions
+export default drizzleOptions;
