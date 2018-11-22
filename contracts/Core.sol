@@ -118,6 +118,14 @@ contract Core is IERC721Full, Ownable {
   }
 
   /**
+   * @dev Gets the contract ERC20 token instance
+   * @return IERC20 tht ERC20 token instance
+   */
+  function token() public view returns (IERC20) {
+    return _token;
+  }
+
+  /**
    * @dev Gets an account tokens balance
    * @param owner address an account to query the balance of
    * @return uint256 the account owned tokens amount
@@ -151,20 +159,6 @@ contract Core is IERC721Full, Ownable {
   }
 
   /**
-   * @dev Gets the token ID that is at the specified index in the allTokens
-   * array
-   * @param index uint256 the ownedTokens array index
-   * @return uint256 ID of the token that is at the specified index in the
-   * allTokens array
-   */
-  function tokenByIndex(uint256 index) public view returns (uint256) {
-    require(index < totalSupply(),
-      "the token index should be less than the total tokens supply");
-
-    return _allTokens[index];
-  }
-
-  /**
    * @dev Gets the specified token end time
    * @param tokenId uint256 ID of the token to query the end time of
    * @return uint256 the token end time
@@ -184,6 +178,20 @@ contract Core is IERC721Full, Ownable {
     require(_exists(tokenId), "the specified token doesn't exist");
 
     return _tokens[tokenId].asset;
+  }
+
+  /**
+   * @dev Gets the token ID that is at the specified index in the allTokens
+   * array
+   * @param index uint256 the ownedTokens array index
+   * @return uint256 ID of the token that is at the specified index in the
+   * allTokens array
+   */
+  function tokenByIndex(uint256 index) public view returns (uint256) {
+    require(index < totalSupply(),
+      "the token index should be less than the total tokens supply");
+
+    return _allTokens[index];
   }
 
   /**
@@ -241,7 +249,7 @@ contract Core is IERC721Full, Ownable {
    */
   function approve(address spender, uint256 tokenId) public {
     require(spender != ownerOf(tokenId),
-      "zero address specified as a tokens spender");
+      "the msg.sender cannot be the owned token approval");
     require(
       msg.sender == ownerOf(tokenId) ||
       isApprovedForAll(ownerOf(tokenId), msg.sender),
