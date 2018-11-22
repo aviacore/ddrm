@@ -14,7 +14,8 @@
     "openzeppelin-solidity": "^2.0.0",
     "prettier": "^1.15.2",
     "truffle": "^4.1.13",
-    "truffle-hdwallet-provider": "0.0.6"
+    "truffle-hdwallet-provider": "0.0.6",
+    "web3-utils": "^1.0.0-beta.36"
   },
   "dependencies": {
     "drizzle": "^1.2.5",

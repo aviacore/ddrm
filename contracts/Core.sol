@@ -28,7 +28,6 @@ contract Core is IERC721Full, Ownable {
 
   string private _name = "DDRM";
   string private _symbol = "DDRM";
-  uint8 private _decimals = 0;
   bytes4 private _ERC721_RECEIVED = 0x150b7a02;
   bytes4 private _InterfaceId_ERC165 = 0x01ffc9a7;
   bytes4 private _InterfaceId_ERC721 = 0x80ac58cd;
