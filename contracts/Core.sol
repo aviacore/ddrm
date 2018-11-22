@@ -44,10 +44,11 @@ contract Core is IERC721Full, Ownable {
   struct Token {
     address owner;
     address approval;
+    bytes4 asset;
+    string uri;
     uint256 ownedTokensIndex;
     uint256 allTokensIndex;
     uint256 endTime;
-    string uri;
   }
 
   mapping (address => Account) private _accounts;
@@ -173,6 +174,17 @@ contract Core is IERC721Full, Ownable {
     require(_exists(tokenId), "the specified token doesn't exist");
 
     return _tokens[tokenId].endTime;
+  }
+
+  /**
+   * @dev Gets the specified token asset
+   * @param tokenId uint256 ID of the token to query the asset of
+   * @return bytes4 ID of the asset to wich the token is attached
+   */
+  function assetOf(uint256 tokenId) public view returns (bytes4) {
+    require(_exists(tokenId), "the specified token doesn't exist");
+
+    return _tokens[tokenId].asset;
   }
 
   /**
@@ -320,7 +332,12 @@ contract Core is IERC721Full, Ownable {
     );
 
     _token.transferFrom(msg.sender, address(this), assetPrice(assetId));
-    _mint(recipient, totalSupply().add(1), block.timestamp.add(30 days));
+    _mint(
+      recipient,
+      assetId,
+      totalSupply().add(1),
+      block.timestamp.add(30 days)
+    );
   }
 
   /**
@@ -437,13 +454,15 @@ contract Core is IERC721Full, Ownable {
    * @dev Private function that emits the token and sends it to the specified
    * account
    * @param to address the token recipient
+   * @param assetId bytes4 ID of the asset to wich the token is attached
    * @param tokenId uint256 ID of the token to be emitted
    * @param endTime uint256 the token end time
    */
-  function _mint(address to, uint256 tokenId, uint256 endTime)
+  function _mint(address to, bytes4 assetId, uint256 tokenId, uint256 endTime)
     private
   {
     _addTokenTo(to, tokenId);
+    _tokens[tokenId].asset = assetId;
     _tokens[tokenId].endTime = endTime;
     _tokens[tokenId].allTokensIndex = _allTokens.length;
     _allTokens.push(tokenId);
