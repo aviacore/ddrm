@@ -203,10 +203,20 @@ contract Core is IERC721Full, Ownable {
     _prices[activityId] = price;
   }
 
-  function claim() public onlyOwner {
-    require(address(this).balance > 0, "");
+  function withdraw() public onlyOwner {
+    require(_token.balanceOf(address(this)) > 0,
+      "the contract doesn't nave funds to send");
 
-    owner.transfer(address(this).balance);
+    _token.transfer(msg.sender, _token.balanceOf(address(this)));
+  }
+
+  function revokeToken(uint256 tokenId) public onlyOwner {
+    require(endTimeOf(tokenId) < block.timestamp,
+      "the specified token is still valid");
+
+    _clearApproval(tokenId);
+    _removeTokenFrom(ownerOf(tokenId), tokenId);
+    _addTokenTo(msg.sender, tokenId);
   }
 
   function _clearApproval(uint256 tokenId) private {
