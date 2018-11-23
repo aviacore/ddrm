@@ -18,9 +18,9 @@ const reducer = (state = initialState, action) => {
   //   });
   // }
 
-  if (action.type === 'ITEMS_RECEIVED'){
+  /*if (action.type === 'ITEMS_RECEIVED'){
     return {...state, data: action.data}
-  }
+  }*/
 
   return state;
 };
