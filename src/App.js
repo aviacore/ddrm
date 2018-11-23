@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router';
+import { Router, Route } from 'react-router';
+import { Switch } from 'react-router-dom';
 import HomeContainer from './layouts/home/HomeContainer';
-import Catalog from './layouts/Catalog';
+
 
 // Styles
-import './css/oswald.css';
-import './css/open-sans.css';
-import './css/pure-min.css';
-import './App.css';
+
+import './css/styles.css';
+import Header from './layouts/Header';
+import Catalog from './layouts/Catalog';
+import Cabinet from './layouts/Cabinet';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        DivApp        
+      <div>
+        <Header />
+        <Switch>
+          <Route exact path='/' component={Catalog}/>
+          <Route path='/cabinet' component={Cabinet}/>
+        </Switch>
       </div>
     );
   }

@@ -128,5 +128,8 @@
     "extends": "react-app"
   },
   "author": "rjkz808",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "react-router-dom": "^4.3.1"
+  }
 }
