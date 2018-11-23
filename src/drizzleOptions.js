@@ -1,5 +1,5 @@
-import Core from './../build/contracts/Core.json';
-import ERC20Token from './../build/contracts/ERC20Token.json';
+import DDRMCore from './../build/contracts/DDRMCore.json';
+import ERC20Example from './../build/contracts/ERC20Example.json';
 
 const drizzleOptions = {
   web3: {
@@ -9,7 +9,7 @@ const drizzleOptions = {
       url: 'ws://127.0.0.1:8545'
     }
   },
-  contracts: [Core, ERC20Token],
+  contracts: [DDRMCore, ERC20Example],
   // events: {
   //   SimpleStorage: ['StorageSet']
   // },

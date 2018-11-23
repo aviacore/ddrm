@@ -8,7 +8,7 @@ import "openzeppelin-solidity/contracts/utils/Address.sol";
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 /**
- * @title Core
+ * @title DDRMCore
  * @author rjkz808
  * @dev The DDRM application core contract
  *
@@ -20,7 +20,7 @@ import "openzeppelin-solidity/contracts/math/SafeMath.sol";
  *  ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
  *
  */
-contract Core is IERC721Full, Ownable {
+contract DDRMCore is IERC721Full, Ownable {
   using Address for address;
   using SafeMath for uint256;
 
@@ -257,7 +257,7 @@ contract Core is IERC721Full, Ownable {
     );
 
     _tokens[tokenId].approval = spender;
-    emit Approval(msg.sender, spender, tokenId);
+    emit Approval(ownerOf(tokenId), spender, tokenId);
   }
 
   /**
@@ -354,7 +354,7 @@ contract Core is IERC721Full, Ownable {
     require(_token.balanceOf(address(this)) > 0,
       "the contract doesn't nave funds to send");
 
-    _token.transfer(msg.sender, _token.balanceOf(address(this)));
+    _token.transfer(owner(), _token.balanceOf(address(this)));
   }
 
   /**
@@ -365,9 +365,11 @@ contract Core is IERC721Full, Ownable {
     require(endTimeOf(tokenId) < block.timestamp,
       "the specified token is still valid");
 
+    address tokenOwner = ownerOf(tokenId);
     _clearApproval(tokenId);
-    _removeTokenFrom(ownerOf(tokenId), tokenId);
-    _addTokenTo(msg.sender, tokenId);
+    _removeTokenFrom(tokenOwner, tokenId);
+    _addTokenTo(owner(), tokenId);
+    emit Transfer(tokenOwner, owner(), tokenId);
   }
 
   /**
