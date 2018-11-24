@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { drizzleConnect } from 'drizzle-react';
 import { fetchContentList, resetContentChoice, chooseContent, changeTheme } from '../items/actions';
 
+import LightToggler from './LightToggler';
 import '../css/styles.css';
 
 class CatalogContainer extends Component {
@@ -87,8 +88,11 @@ class CatalogContainer extends Component {
 
             </div>
           </div>
-        
+
+          <LightToggler />
+          
           {modal}
+
         </div>
       </div>
     );

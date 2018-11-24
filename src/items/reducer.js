@@ -1,6 +1,6 @@
 import {GET_ITEMS} from "./actions";
-import { CHOOSE_CONTENT, FETCH_CONTENT_LIST, RESET_CONTENT_CHOICE, FETCH_PURCHASED_CONTENT_LIST } from './actions';
-import { DataBase, DataBasePurchased } from '../DataBase.jsx';
+import { CHOOSE_CONTENT, FETCH_CONTENT_LIST, RESET_CONTENT_CHOICE, FETCH_PURCHASED_CONTENT_LIST, CHANGE_THEME } from './actions';
+import { DataBase, DataBasePurchased } from '../layouts/DataBase.jsx';
 
 const initialState = {
   data: [],
@@ -53,7 +53,7 @@ const reducer = (state = initialState, action) => {
   }
 
   if( action.type === CHANGE_THEME) {
-    return { ...state, lightTheme: !lightTheme }
+    return { ...state, lightTheme: !state.lightTheme }
   }
 
   return state;

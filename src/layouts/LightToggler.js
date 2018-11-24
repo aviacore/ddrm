@@ -1,13 +1,14 @@
+import React from 'react';
 import { drizzleConnect } from 'drizzle-react';
 import { changeTheme } from '../items/actions';
 
 
-const LightTogglerContainer = () => {
-    const L = this.props.lightTheme;
+const LightTogglerContainer = (props) => {
+    const L = props.lightTheme;
 
     return (
         <div className="light-toggler-wrapper">
-          <button type="button" className={ `light-toggler ${L ? 'l-theme' : 'd-theme' }`} onClick={this.props.changeTheme}></button>
+          <button type="button" className={ `light-toggler ${L ? 'l-theme' : 'd-theme' }`} onClick={props.changeTheme}></button>
         </div>
     );
 }
