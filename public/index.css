@@ -15,4 +15,5 @@ body{
 *{
     font-family: 'Rubik', sans-serif;
     box-sizing: border-box;
+    transition: all 0.2s ease;
 }
