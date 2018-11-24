@@ -28,11 +28,11 @@ contract DDRMCore is IERC721Full, Ownable {
 
   string private _name = "DDRM";
   string private _symbol = "DDRM";
-  bytes4 private _ERC721_RECEIVED = 0x150b7a02;
-  bytes4 private _InterfaceId_ERC165 = 0x01ffc9a7;
-  bytes4 private _InterfaceId_ERC721 = 0x80ac58cd;
-  bytes4 private _InterfaceId_ERC721Enumerable = 0x780e9d63;
-  bytes4 private _InterfaceId_ERC721Metadata = 0x5b5e139f;
+  bytes4 private _onERC721Received = 0x150b7a02;
+  bytes4 private _interfaceIdERC165 = 0x01ffc9a7;
+  bytes4 private _interfaceIdERC721 = 0x80ac58cd;
+  bytes4 private _interfaceIdERC721Enumerable = 0x780e9d63;
+  bytes4 private _interfaceIdERC721Metadata = 0x5b5e139f;
   uint256[] private _allTokens;
 
   struct Account {
@@ -64,10 +64,10 @@ contract DDRMCore is IERC721Full, Ownable {
     require(address(token) != address(0));
 
     _token = token;
-    _registerInterface(_InterfaceId_ERC165);
-    _registerInterface(_InterfaceId_ERC721);
-    _registerInterface(_InterfaceId_ERC721Enumerable);
-    _registerInterface(_InterfaceId_ERC721Metadata);
+    _registerInterface(_interfaceIdERC165);
+    _registerInterface(_interfaceIdERC721);
+    _registerInterface(_interfaceIdERC721Enumerable);
+    _registerInterface(_interfaceIdERC721Metadata);
   }
 
   /**
@@ -188,6 +188,7 @@ contract DDRMCore is IERC721Full, Ownable {
    * allTokens array
    */
   function tokenByIndex(uint256 index) public view returns (uint256) {
+    // solium-disable-next-line indentation
     require(index < totalSupply(),
       "the token index should be less than the total tokens supply");
 
@@ -227,19 +228,11 @@ contract DDRMCore is IERC721Full, Ownable {
     public view returns (uint256)
   {
     require(owner != address(0), "zero address specified as a token owner");
+    // solium-disable-next-line indentation
     require(index < balanceOf(owner),
       "the token index should be less than the specified token owner balance");
 
     return _accounts[owner].ownedTokens[index];
-  }
-
-  /**
-   * @dev Internal function that gets the specified token existence
-   * @param tokenId uint256 ID of the token to query the existence of
-   * @return bool `true` if the token exists, `false` otherwise
-   */
-  function _exists(uint256 tokenId) internal view returns (bool) {
-    return _tokens[tokenId].owner != address(0);
   }
 
   /**
@@ -248,6 +241,7 @@ contract DDRMCore is IERC721Full, Ownable {
    * @param tokenId uint256 ID of the token to be approved
    */
   function approve(address spender, uint256 tokenId) public {
+    // solium-disable-next-line indentation
     require(spender != ownerOf(tokenId),
       "the msg.sender cannot be the owned token approval");
     require(
@@ -280,7 +274,9 @@ contract DDRMCore is IERC721Full, Ownable {
    */
   function transferFrom(address from, address to, uint256 tokenId) public {
     require(
+      // solium-disable-next-line operator-whitespace
       msg.sender == ownerOf(tokenId) ||
+      // solium-disable-next-line operator-whitespace
       msg.sender == getApproved(tokenId) ||
       isApprovedForAll(from, msg.sender),
       "the msg.sender isn't owner, approval or operator of the specified token"
@@ -331,6 +327,7 @@ contract DDRMCore is IERC721Full, Ownable {
    * @param assetId bytes4 ID of the asset to buy the token of
    */
   function buyToken(address recipient, bytes4 assetId) public {
+    // solium-disable-next-line indentation
     require(recipient != address(0),
       "zero address specified as a token recipient");
     require(
@@ -351,6 +348,7 @@ contract DDRMCore is IERC721Full, Ownable {
    * @dev Transfers tokens earned for the assets sale to the contract owner
    */
   function withdraw() public onlyOwner {
+    // solium-disable-next-line indentation
     require(_token.balanceOf(address(this)) > 0,
       "the contract doesn't nave funds to send");
 
@@ -362,6 +360,7 @@ contract DDRMCore is IERC721Full, Ownable {
    * @param tokenId uint256 ID of the token to be revoked
    */
   function revokeToken(uint256 tokenId) public onlyOwner {
+    // solium-disable-next-line indentation
     require(endTimeOf(tokenId) < block.timestamp,
       "the specified token is still valid");
 
@@ -383,6 +382,15 @@ contract DDRMCore is IERC721Full, Ownable {
     require(assetId != 0xffffffff, "invalid asset ID specified");
 
     _prices[assetId] = price;
+  }
+
+  /**
+   * @dev Internal function that gets the specified token existence
+   * @param tokenId uint256 ID of the token to query the existence of
+   * @return bool `true` if the token exists, `false` otherwise
+   */
+  function _exists(uint256 tokenId) internal view returns (bool) {
+    return _tokens[tokenId].owner != address(0);
   }
 
   /**
@@ -419,6 +427,7 @@ contract DDRMCore is IERC721Full, Ownable {
    * @param tokenId uint256 ID of the token to be removed
    */
   function _removeTokenFrom(address from, uint256 tokenId) private {
+    // solium-disable-next-line indentation
     require(from == ownerOf(tokenId),
       "the specified address isn't the specified token owner");
 
@@ -436,7 +445,7 @@ contract DDRMCore is IERC721Full, Ownable {
   /**
    * @dev Private function that calls the contract recipient
    * `onERC721Received` function and checks that the return value is equal to
-   * the _ERC721_RECEIVED value
+   * the _onERC721Received value
    * @param from address the token owner
    * @param to address the token recipient
    * @param tokenId uint256 ID of the tokens to be transferred
@@ -451,11 +460,13 @@ contract DDRMCore is IERC721Full, Ownable {
     private
   {
     if (to.isContract())
-      require(_ERC721_RECEIVED == IERC721Receiver(to).onERC721Received(
+      // solium-disable-next-line indentation
+      require(_onERC721Received == IERC721Receiver(to).onERC721Received(
         msg.sender,
         from,
         tokenId,
         data
+      // solium-disable-next-line indentation
       ), "the specified address cannot receive tokens");
   }
 

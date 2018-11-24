@@ -1,10 +1,82 @@
 {
   "name": "ddrm",
   "version": "0.1.0",
+  "author": "EventGuru team",
+  "license": "MIT",
   "description": "SerialHacking task",
+  "keywords": [
+    "eventguru",
+    "drm",
+    "ethereum",
+    "erc20",
+    "erc165",
+    "erc721"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aviacore/ddrm"
+  },
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
+  },
+  "scripts": {
+    "build": "npm run build:sol && npm run build:js",
+    "build:js": "node scripts/build.js",
+    "build:sol": "./node_modules/.bin/truffle compile",
+    "chain": "./node_modules/.bin/ganache-cli",
+    "console": "./node_modules/.bin/truffle console --network development",
+    "lint": "npm run lint:sol",
+    "lint:fix": "npm run lint:sol:fix",
+    "lint:sol": "./node_modules/.bin/solium -d .",
+    "lint:sol:fix": "./node_modules/.bin/solium -d . --fix",
+    "migrate": "./node_modules/.bin/truffle migrate --network development --reset",
+    "start": "node scripts/start.js",
+    "test": "npm run test:sol && npm run test:js",
+    "test:js": "node scripts/test.js --env=jsdom",
+    "test:sol": "./node_modules/.bin/truffle test --network development"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,mjs}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
+      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
+    ],
+    "testEnvironment": "node",
+    "testURL": "http://localhost",
+    "transform": {
+      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node",
+      "mjs"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "devDependencies": {
     "ansi-styles": "^3.2.1",
@@ -52,6 +124,7 @@
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-router-redux": "^4.0.8",
     "react-table": "^6.8.6",
     "redux": "^4.0.0",
@@ -59,6 +132,7 @@
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.3.0",
     "resolve": "1.6.0",
+    "solium": "^1.1.8",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "truffle": "^4.1.14",
@@ -67,69 +141,8 @@
     "web3": "^1.0.0-beta.34",
     "web3-utils": "^1.0.0-beta.36",
     "webpack": "3.8.1",
-    "webpack-dev-server": "2.9.4",
+    "webpack-dev-server": "^3.1.10",
     "webpack-manifest-plugin": "1.3.2",
     "whatwg-fetch": "2.0.3"
-  },
-  "scripts": {
-    "start": "node scripts/start.js",
-    "build": "truffle compile && node scripts/build.js",
-    "test-client": "node scripts/test.js --env=jsdom",
-    "chain": "ganache-cli",
-    "prepare": "npm run build",
-    "compile": "truffle compile",
-    "console": "truffle console --network development",
-    "migrate": "truffle migrate --network development --reset",
-    "test": "truffle test --network development"
-  },
-  "keywords": [
-    "erc721"
-  ],
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,mjs}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
-      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
-    ],
-    "testEnvironment": "node",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node",
-      "mjs"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "author": "rjkz808",
-  "license": "MIT",
-  "dependencies": {
-    "react-router-dom": "^4.3.1"
   }
 }
