@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Route } from 'react-router';
+import { Route } from 'react-router';
 import { Switch } from 'react-router-dom';
 import HomeContainer from './layouts/home/HomeContainer';
 
@@ -18,7 +18,7 @@ class App extends Component {
         <Header />
         <Switch>
           <Route exact path='/' component={Catalog}/>
-          <Route path='/cabinet' component={Cabinet}/>
+          <Route exact path='/cabinet' component={Cabinet}/>
         </Switch>
       </div>
     );

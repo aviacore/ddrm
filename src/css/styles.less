@@ -1,16 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik:500');
 
-html,body{
-    padding: 0!important;
-    margin: 0!important;
 
-    overflow-x: hidden;
-}
-
-*{
-    font-family: 'Rubik', sans-serif;
-    box-sizing: border-box;
-}
 
 @padding: 1rem;
 @pageWidth: 70%;
@@ -18,21 +8,22 @@ html,body{
 .catalog{
     width: 100vw;
     height: 100vh;
-    background-color: #fafafa;
     background-image: url(../img/backgr.png);
-
   .catalog-wrapper{
-    width: 100%;    
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
-    
+    position: relative;
+    background-color: transparent;
+    padding-top: 10vh;
     
     .list{
       width: @pageWidth;
       z-index: 5;
       .list-wrapper{
         width: 100%;
-        height: 100%;
+        height: 80%;
         background-color: white;
         display: flex;
         flex-flow: column;
@@ -96,6 +87,7 @@ html,body{
         left: 0;
         bottom: 0;
         left: 0;
+        background-color: transparent;
     }
     .bg:nth-of-type(1){
         background-image: url(../img/f1.png);
@@ -131,6 +123,10 @@ header{
   width: 100vw;
   display: flex;
   justify-content: center;
+  z-index: 5;
+  position: fixed;
+  top: 0;
+  left: 0;
   .header-wrapper{
     padding: @padding 0;
     display: flex;

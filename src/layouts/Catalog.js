@@ -8,13 +8,20 @@ class Catalog extends Component {
       this.state = {};
   }
 
+
+  /**
+   * <div className="bg"></div>
+          <div className="bg"></div>
+          <div className="bg"></div>
+          <div className="list">
+   * 
+   * 
+   */
   render = () => {
     return (
       <div className="catalog">
         <div className="catalog-wrapper">
-          <div className="bg"></div>
-          <div className="bg"></div>
-          <div className="bg"></div>
+          
           <div className="list">
             <div className="list-wrapper tile">
               <div className="el header">
