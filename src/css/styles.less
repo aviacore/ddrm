@@ -66,6 +66,11 @@
           }
           
         }
+        .el:hover{
+          cursor: pointer;
+          background-color: #ededed;
+        }
+
         .el.header{
           .name, .price{
             >div{
@@ -275,6 +280,38 @@
   box-shadow: 10px 5px 40px rgba(150,150,150,.4);
 }
 
+.modal{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .background{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    background-color: rgba(0,0,0,.5);
+  }
+  .modal-content{
+    z-index: 12;
+    width: @pageWidth;
+    background-color: white;
+    .modal-content-wrapper{
+      width: 100%;
+      height: 80vh;
+    }
+  }
+}
+.background:hover{
+  cursor: pointer;
+}
 
 header{
   background-image: url("../img/backgr.png");
