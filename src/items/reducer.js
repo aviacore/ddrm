@@ -1,7 +1,24 @@
 import {GET_ITEMS} from "./actions";
 
 const initialState = {
-  data: []
+  data: [],
+  contentList: [
+    {
+      id: 1,
+      name: 'Project 1',
+      price: 43
+    },
+    {
+      id: 2,
+      name: 'Project 2',
+      price: 58
+    },
+    {
+      id: 3,
+      name: 'Project 3',
+      price: 12
+    }
+  ]
 };
 
 

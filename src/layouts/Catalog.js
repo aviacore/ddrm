@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
+import { drizzleConnect } from 'drizzle-react';
+import { fetchContentList } from '../items/actions';
 
 import '../css/styles.css';
 
-class Catalog extends Component {
+class CatalogContainer extends Component {
   constructor(props) {
       super(props);
-      this.state = {};
+      
   }
 
 
@@ -18,6 +20,20 @@ class Catalog extends Component {
    * 
    */
   render = () => {
+
+    const list = this.props.contentList.map( (el) => {
+      return (
+        <div className="el tile">
+          <div className="id"><span>{el.id}</span></div>
+            <div className="name"><span>{el.name}</span></div>
+            <div className="price"><span>{el.price}</span></div>
+            <div className="button">
+              <div></div>
+            </div>
+        </div>
+      )
+    });
+
     return (
       <div className="catalog">
         <div className="catalog-wrapper">
@@ -35,30 +51,9 @@ class Catalog extends Component {
                 <div className="button">
                 </div>
               </div>
-              <div className="el tile">
-                <div className="id"><span>1</span></div>
-                <div className="name"><span>Project1</span></div>
-                <div className="price"><span>43</span></div>
-                <div className="button">
-                  <div></div>
-                </div>
-              </div>
-              <div className="el tile">
-                <div className="id"><span>1</span></div>
-                <div className="name"><span>Project1</span></div>
-                <div className="price"><span>43</span></div>
-                <div className="button">
-                  <div></div>
-                </div>
-              </div>
-              <div className="el tile">
-                <div className="id"><span>1</span></div>
-                <div className="name"><span>Project1</span></div>
-                <div className="price"><span>43</span></div>
-                <div className="button">
-                  <div></div>
-                </div>
-              </div>
+
+              {list}
+
             </div>
           </div>
         </div>
@@ -66,5 +61,13 @@ class Catalog extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    contentList: state.items.contentList
+  };
+};
+
+const Catalog = drizzleConnect(CatalogContainer, mapStateToProps);
 
 export default Catalog;
