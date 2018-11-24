@@ -5,6 +5,8 @@ export const ITEMS_RECEIVED = 'ITEMS_RECEIVED';
 export const FETCH_CONTENT_LIST = 'FETCH_CONTENT_LIST';
 export const CHOOSE_CONTENT = 'CHOOSE_CONTENT';
 export const RESET_CONTENT_CHOICE = 'RESET_CONTENT_CHOICE';
+export const FETCH_PURCHASED_CONTENT_LIST = 'FETCH_PURCHASED_CONTENT_LIST';
+export const CHANGE_THEME = 'CHANGE_THEME';
 
 export const getData = dispatch => async () => {
   return dispatch({
@@ -30,8 +32,19 @@ export const resetContentChoice = () => dispatch => {
 
 
 export const fetchContentList = () => dispatch => {
-  
   return dispatch({
       type: FETCH_CONTENT_LIST
   });
+}
+
+export const fetchPurchasedContentList = () => dispatch => {
+  return dispatch({
+    type: FETCH_PURCHASED_CONTENT_LIST
+  })
+}
+
+export const changeTheme = () => dispatch => {
+  return dispatch({
+    type: CHANGE_THEME
+  })
 }

@@ -1,10 +1,14 @@
 import {GET_ITEMS} from "./actions";
-import { CHOOSE_CONTENT, FETCH_CONTENT_LIST, RESET_CONTENT_CHOICE } from './actions';
+import { CHOOSE_CONTENT, FETCH_CONTENT_LIST, RESET_CONTENT_CHOICE, FETCH_PURCHASED_CONTENT_LIST } from './actions';
+import { DataBase, DataBasePurchased } from '../DataBase.jsx';
 
 const initialState = {
   data: [],
   contentList: [],
   chosenContentId: null,
+  lightTheme: true,
+
+  username: null,
   purchasedContentList: [
     {
       id: 3,
@@ -37,27 +41,19 @@ const reducer = (state = initialState, action) => {
   }
 
   if( action. type === FETCH_CONTENT_LIST) {
-    return { ...state, contentList: [
-      {
-        id: 1,
-        name: 'Project 1',
-        price: 43
-      },
-      {
-        id: 2,
-        name: 'Project 2',
-        price: 58
-      },
-      {
-        id: 3,
-        name: 'Project 3',
-        price: 12
-      }
-    ]}
+    return { ...state, contentList: DataBase }
   }
 
   if( action.type === RESET_CONTENT_CHOICE ) {
     return { ...state, chosenContentId: null}
+  }
+
+  if( action.type === FETCH_PURCHASED_CONTENT_LIST) {
+    return { ...state, purchasedContentList: DataBasePurchased }
+  }
+
+  if( action.type === CHANGE_THEME) {
+    return { ...state, lightTheme: !lightTheme }
   }
 
   return state;
