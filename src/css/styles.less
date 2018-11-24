@@ -4,8 +4,10 @@
 
 @padding: 1rem;
 @pageWidth: 70%;
+@fontSize: 1.2rem;
 
 .catalog{
+    font-size: @fontSize;
     width: 100vw;
     height: 100vh;
     background-image: url(../img/backgr.png);
@@ -34,6 +36,7 @@
           display: flex;
           flex-flow: row;
           margin-bottom: @padding;
+          font-size: 1.3rem;
           .id, .name, .price, .button{
             padding: @padding/2;
             display: flex;
@@ -47,14 +50,18 @@
           }
           .price{
             width: 30%;
+            color: #5e77ff;
           }
           .button{
             width: 20%;
             div{
-                width: 10px;
-                height: 10px;
-                background-color: black;
-                border-radius: 5px;
+                width: 30px;
+                height: 30px;
+                background-image: url(../img/arrow.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position: center;
+                
             }
           }
           
@@ -65,8 +72,8 @@
               background-size: 100%;
               background-repeat: no-repeat;
               background-position: center;
-              width: 30px;
-              height: 30px;
+              width: 1.8rem;
+              height: 1.8rem;
             }
           }
           .name>div{
@@ -110,11 +117,162 @@
   }
 }
 
+.cabinet{
+  font-size: @fontSize;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../img/backgr.png);
+  .cabinet-wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    background-color: transparent;
+    padding-top: 10vh;
+    
+    .page{
+      width: @pageWidth;
+      z-index: 5;
+      .page-wrapper{
+        width: 100%;
+        display: flex;
+        flex-flow: row;
+        .sidebar{
+          margin-right: @padding;
+          width: 30% - @padding*2;
+          height: 300px;
+          background-color: white;
+          .sidebar-wrapper{
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            .avatar, .address, .balance, .separator{
+              width: 100%;
+              display: flex;
+              justify-content: center;
+            }
+            
+            .avatar{
+              display: flex;
+              justify-content: center;
+              >div{
+                width: 7rem;
+                height: 7rem;
+                border-radius: 3.5rem;
+                background-image: url(https://avatanplus.com/files/photos/mid/57f3ddf27b36e157909afb49.jpg);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+              }
+              
+            }
+            .address{
+              padding: @padding 0;
+            }
+            .separator{
+              border-top: 2px dashed grey;
+            }
+            .balance{
+              padding: @padding 0;
+              display: flex;
+              flex-flow: column;
+              align-items: center;
+              .icon{
+                width: 2rem;
+                height: 2rem;
+                background-image: url(../img/icon4.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position: center;
+              }
+              .number{
+                padding: @padding/2 0;
+              }
+            }
+          }
+        }
+
+        .list{
+          padding-top: @padding*2;
+          padding-bottom: @padding*2;
+          margin-left: @padding;
+          width: 70% - @padding*2;
+          
+          background-color: white;
+          .list-wrapper{
+            width: 100%;
+            display: flex;
+            flex-flow: column;
+            
+            .el{
+              margin-bottom: @padding;
+              width: 100%;
+              display: flex;
+              flex-flow: row;
+              .project{
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                width: 60% - @padding;
+                margin-right: @padding/2;
+                .id{
+                  display: flex;
+                  justify-content: center;
+                  width: 30%;
+                }
+                .name{
+                  width: 70%;
+                }
+              }
+              .time{
+                font-size: 2rem;
+                width: 40% - @padding;
+                margin-left: @padding/2;
+                .time-wrapper{
+                  width: 100%;
+                  display: flex;
+                  justify-content: center;
+                }
+              }
+            }
+
+            .el.header{
+              .header-icon>div{
+                width: 2rem;
+                height: 2rem;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 100%;
+              }
+
+              .project{
+                display: flex;
+                justify-content: center;
+                .header-icon{
+                  >div{
+                    background-image: url(../img/icon3.png);
+                  }
+                } 
+              }
+              
+              .time .header-icon{
+                >div{
+                  background-image: url(../img/clock.png);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
 .tile{
   padding: @padding;
   border-radius: @padding;
-  box-shadow: 10px 5px 50px rgba(150,150,150,.4);
+  box-shadow: 10px 5px 40px rgba(150,150,150,.4);
 }
 
 

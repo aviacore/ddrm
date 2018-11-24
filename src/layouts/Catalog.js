@@ -36,27 +36,27 @@ class Catalog extends Component {
                 </div>
               </div>
               <div className="el tile">
-                <div className="id">1</div>
-                <div className="name">Project1</div>
-                <div className="price">43</div>
+                <div className="id"><span>1</span></div>
+                <div className="name"><span>Project1</span></div>
+                <div className="price"><span>43</span></div>
                 <div className="button">
                   <div></div>
                 </div>
               </div>
               <div className="el tile">
-                <div className="id">1</div>
-                <div className="name">Project1</div>
-                <div className="price">43</div>
+                <div className="id"><span>1</span></div>
+                <div className="name"><span>Project1</span></div>
+                <div className="price"><span>43</span></div>
                 <div className="button">
-                <div></div>
+                  <div></div>
                 </div>
               </div>
               <div className="el tile">
-                <div className="id">1</div>
-                <div className="name">Project1</div>
-                <div className="price">43</div>
+                <div className="id"><span>1</span></div>
+                <div className="name"><span>Project1</span></div>
+                <div className="price"><span>43</span></div>
                 <div className="button">
-                <div></div>
+                  <div></div>
                 </div>
               </div>
             </div>
