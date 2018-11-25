@@ -104,7 +104,7 @@ contract('DDRMCore', function(accounts) {
       });
     });
 
-    context('when zero address specified as a IERC20 token contract', function() {
+    context('when zero address specified as an IERC20 token contract', function() {
       it('reverts', async function() {
         await shouldFail.reverting(DDRMCore.new(ZERO_ADDRESS, { from: creator }));
       });
