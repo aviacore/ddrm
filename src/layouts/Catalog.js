@@ -10,6 +10,10 @@ import {
 import LightToggler from './LightToggler';
 import '../css/styles.css';
 
+import icon3 from '../img/icon3.png';
+import icon4 from '../img/icon4.png';
+import iconArrow from '../img/arrow.png';
+
 class CatalogContainer extends Component {
   constructor(props) {
     super(props);
@@ -23,18 +27,13 @@ class CatalogContainer extends Component {
     const { contentList, resetContentChoice, chosenContentId, chooseContent } = this.props;
     const L = this.props.lightTheme;
 
-    const dynamicStyle = {
-      backgroundColor: L ? 'white' : '#333',
-      color: L ? 'black' : 'eee'
-    };
-
     const list = contentList.map(el => {
       const chooseThisContent = () => {
         chooseContent(el.id);
       };
 
       return (
-        <div className="el tile" onClick={chooseThisContent} key={el.id} style={dynamicStyle}>
+        <div className="el tile" onClick={chooseThisContent} key={el.id}>
           <div className="id">
             <span>{el.id}</span>
           </div>
@@ -45,7 +44,7 @@ class CatalogContainer extends Component {
             <span>{el.price}</span>
           </div>
           <div className="button">
-            <div />
+            <img src={iconArrow} />
           </div>
         </div>
       );
@@ -54,7 +53,7 @@ class CatalogContainer extends Component {
     const modal = chosenContentId && (
       <div className="modal">
         <div className="background" onClick={resetContentChoice} />
-        <div className="modal-content tile" style={dynamicStyle}>
+        <div className="modal-content tile">
           <div className="modal-content-wrapper">
             <div className="id-name">
               <div className="id">
@@ -82,20 +81,23 @@ class CatalogContainer extends Component {
     );
 
     return (
-      <div className="catalog">
+      <div className={`${L? 'catalog' : 'catalog d-theme'}`}>
         <div className="catalog-wrapper">
           <div className="bg" />
           <div className="bg" />
           <div className="bg" />
           <div className="list">
-            <div className="list-wrapper tile" style={dynamicStyle}>
+            <div className="list-wrapper tile">
+
               <div className="el header">
                 <div className="id" />
                 <div className="name">
-                  <div />
+                  <img src={icon3} />
+                  
                 </div>
                 <div className="price">
-                  <div />
+                  <img src={icon4} />
+                  
                 </div>
                 <div className="button" />
               </div>

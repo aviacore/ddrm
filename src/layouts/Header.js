@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { drizzleConnect } from 'drizzle-react';
 
 import '../css/styles.css';
 
-class Header extends Component {
+class HeaderContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    
   }
 
   render = () => {
+
+    const L = this.props.lightTheme;
+
     return (
-      <header>
+      <header className={`${L? '':'d-theme'}`}>
         <div className="header-wrapper">
           <div className="left">
             <div className="logo" />
@@ -66,5 +70,13 @@ class Header extends Component {
     );
   };
 }
+
+const mapStateToProps = state => {
+  return {
+    lightTheme: state.items.lightTheme
+  };
+};
+
+const Header = drizzleConnect(HeaderContainer, mapStateToProps);
 
 export default Header;
