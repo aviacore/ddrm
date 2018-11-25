@@ -1,22 +1,21 @@
-import AuthenticationContract from '../../../../build/contracts/Authentication.json'
-import { loginUser } from '../loginbutton/LoginButtonActions'
-import store from '../../../store'
+import AuthenticationContract from '../../../../build/contracts/Authentication.json';
+import { loginUser } from '../loginbutton/LoginButtonActions';
+import store from '../../../store';
 
-const contract = require('truffle-contract')
+const contract = require('truffle-contract');
 
 export function signUpUser(name) {
-  let web3 = store.getState().web3.web3Instance
+  let web3 = store.getState().web3.web3Instance;
 
   // Double-check web3's status.
   if (typeof web3 !== 'undefined') {
-
     return function(dispatch) {
       // Using truffle-contract we create the authentication object.
-      const authentication = contract(AuthenticationContract)
-      authentication.setProvider(web3.currentProvider)
+      const authentication = contract(AuthenticationContract);
+      authentication.setProvider(web3.currentProvider);
 
       // Declaring this for later so we can chain functions on Authentication.
-      var authenticationInstance
+      var authenticationInstance;
 
       // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
@@ -26,20 +25,21 @@ export function signUpUser(name) {
         }
 
         authentication.deployed().then(function(instance) {
-          authenticationInstance = instance
+          authenticationInstance = instance;
 
           // Attempt to sign up user.
-          authenticationInstance.signup(name, {from: coinbase})
-          .then(function(result) {
-            // If no error, login user.
-            return dispatch(loginUser())
-          })
-          .catch(function(result) {
-            // If error...
-          })
-        })
-      })
-    }
+          authenticationInstance
+            .signup(name, { from: coinbase })
+            .then(function(result) {
+              // If no error, login user.
+              return dispatch(loginUser());
+            })
+            .catch(function(result) {
+              // If error...
+            });
+        });
+      });
+    };
   } else {
     console.error('Web3 is not initialized.');
   }

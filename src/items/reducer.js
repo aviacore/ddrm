@@ -1,5 +1,11 @@
-import {GET_ITEMS} from "./actions";
-import { CHOOSE_CONTENT, FETCH_CONTENT_LIST, RESET_CONTENT_CHOICE, FETCH_PURCHASED_CONTENT_LIST, CHANGE_THEME } from './actions';
+import { GET_ITEMS } from './actions';
+import {
+  CHOOSE_CONTENT,
+  FETCH_CONTENT_LIST,
+  RESET_CONTENT_CHOICE,
+  FETCH_PURCHASED_CONTENT_LIST,
+  CHANGE_THEME
+} from './actions';
 import { DataBase, DataBasePurchased } from '../layouts/DataBase.jsx';
 
 const initialState = {
@@ -18,7 +24,6 @@ const initialState = {
   ]
 };
 
-
 const reducer = (state = initialState, action) => {
   // if (action.type === 'USER_LOGGED_IN' || action.type === 'USER_UPDATED') {
   //   return Object.assign({}, state, {
@@ -36,24 +41,24 @@ const reducer = (state = initialState, action) => {
     return {...state, data: action.data}
   }*/
 
-  if( action.type === CHOOSE_CONTENT ) {
-    return { ...state, chosenContentId: action.data.id}
+  if (action.type === CHOOSE_CONTENT) {
+    return { ...state, chosenContentId: action.data.id };
   }
 
-  if( action. type === FETCH_CONTENT_LIST) {
-    return { ...state, contentList: DataBase }
+  if (action.type === FETCH_CONTENT_LIST) {
+    return { ...state, contentList: DataBase };
   }
 
-  if( action.type === RESET_CONTENT_CHOICE ) {
-    return { ...state, chosenContentId: null}
+  if (action.type === RESET_CONTENT_CHOICE) {
+    return { ...state, chosenContentId: null };
   }
 
-  if( action.type === FETCH_PURCHASED_CONTENT_LIST) {
-    return { ...state, purchasedContentList: DataBasePurchased }
+  if (action.type === FETCH_PURCHASED_CONTENT_LIST) {
+    return { ...state, purchasedContentList: DataBasePurchased };
   }
 
-  if( action.type === CHANGE_THEME) {
-    return { ...state, lightTheme: !state.lightTheme }
+  if (action.type === CHANGE_THEME) {
+    return { ...state, lightTheme: !state.lightTheme };
   }
 
   return state;

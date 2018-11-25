@@ -1,6 +1,6 @@
 import Home from './Home';
 import { drizzleConnect } from 'drizzle-react';
-import {getData} from "../../items/actions";
+import { getData } from '../../items/actions';
 
 // May still need this even with data function to refresh component on updates for this contract.
 const mapStateToProps = state => {
@@ -8,7 +8,7 @@ const mapStateToProps = state => {
     accounts: state.accounts,
     Core: state.contracts.Core,
     drizzleStatus: state.drizzleStatus,
-      data: state.items.data
+    data: state.items.data
   };
 };
 

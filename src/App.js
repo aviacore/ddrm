@@ -3,7 +3,6 @@ import { Route } from 'react-router';
 import { Switch } from 'react-router-dom';
 import HomeContainer from './layouts/home/HomeContainer';
 
-
 // Styles
 
 import './css/styles.css';
@@ -17,8 +16,8 @@ class App extends Component {
       <div>
         <Header />
         <Switch>
-          <Route exact path='/' component={Catalog}/>
-          <Route exact path='/cabinet' component={Cabinet}/>
+          <Route exact path="/" component={Catalog} />
+          <Route exact path="/cabinet" component={Cabinet} />
         </Switch>
       </div>
     );

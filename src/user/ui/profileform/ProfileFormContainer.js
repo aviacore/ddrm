@@ -1,26 +1,26 @@
-import { connect } from 'react-redux'
-import ProfileForm from './ProfileForm'
-import { updateUser } from './ProfileFormActions'
+import { connect } from 'react-redux';
+import ProfileForm from './ProfileForm';
+import { updateUser } from './ProfileFormActions';
 
 const mapStateToProps = (state, ownProps) => {
   return {
     name: state.user.data.name
-  }
-}
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    onProfileFormSubmit: (name) => {
+    onProfileFormSubmit: name => {
       event.preventDefault();
 
-      dispatch(updateUser(name))
+      dispatch(updateUser(name));
     }
-  }
-}
+  };
+};
 
 const ProfileFormContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProfileForm)
+)(ProfileForm);
 
-export default ProfileFormContainer
+export default ProfileFormContainer;

@@ -890,13 +890,13 @@ contract('DDRMCore', function(accounts) {
       });
     });
 
-    context('when the contract doesn\'t own any tokens', function() {
+    context("when the contract doesn't own any tokens", function() {
       it('reverts', async function() {
         await shouldFail.reverting(this.core.withdraw({ from: creator }));
       });
     });
 
-    context('when the msg.sender isn\'t contract owner', function() {
+    context("when the msg.sender isn't contract owner", function() {
       it('reverts', async function() {
         await this.token.mint(accounts[0], 30, { from: creator });
         await this.token.transfer(this.core.address, 30, { from: accounts[0] });
@@ -929,7 +929,7 @@ contract('DDRMCore', function(accounts) {
       });
     });
 
-    context('when the msg.sender isn\'t contract owner', function() {
+    context("when the msg.sender isn't contract owner", function() {
       it('reverts', async function() {
         await this.core.buyToken(accounts[1], assetId, { from: accounts[1] });
         await increase(duration.days(31));
@@ -952,7 +952,7 @@ contract('DDRMCore', function(accounts) {
       });
     });
 
-    context('when the msg.sender isn\'t contract owner', function() {
+    context("when the msg.sender isn't contract owner", function() {
       it('reverts', async function() {
         await shouldFail.reverting(this.core.setAssetPrice(assetId, 721, { from: accounts[1] }));
       });

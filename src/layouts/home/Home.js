@@ -5,7 +5,7 @@ import Table from './Table';
 
 class Home extends Component {
   ComponentDidMount() {
-    this.props.getData()
+    this.props.getData();
   }
 
   render() {
@@ -68,7 +68,6 @@ class Home extends Component {
           <br />
         </div>
         <Table data={this.props.data} />
-
       </main>
     );
   }

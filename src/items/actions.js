@@ -15,36 +15,35 @@ export const getData = dispatch => async () => {
   });
 };
 
-export const chooseContent = (id) => dispatch => {
+export const chooseContent = id => dispatch => {
   dispatch({
     type: CHOOSE_CONTENT,
     data: {
       id
     }
   });
-}
+};
 
 export const resetContentChoice = () => dispatch => {
   return dispatch({
     type: RESET_CONTENT_CHOICE
-  })
-}
-
+  });
+};
 
 export const fetchContentList = () => dispatch => {
   return dispatch({
-      type: FETCH_CONTENT_LIST
+    type: FETCH_CONTENT_LIST
   });
-}
+};
 
 export const fetchPurchasedContentList = () => dispatch => {
   return dispatch({
     type: FETCH_PURCHASED_CONTENT_LIST
-  })
-}
+  });
+};
 
 export const changeTheme = () => dispatch => {
   return dispatch({
     type: CHANGE_THEME
-  })
-}
+  });
+};

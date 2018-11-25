@@ -1,44 +1,54 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Home extends Component {
   constructor(props, context) {
-    super(props)
+    super(props);
 
-    this.contracts = context.drizzle.contracts
-    this.handleSetButton = this.handleSetButton.bind(this)
-    this.handleSendTokens = this.handleSendTokens.bind(this)
-    this.handleInputChange = this.handleInputChange.bind(this)
+    this.contracts = context.drizzle.contracts;
+    this.handleSetButton = this.handleSetButton.bind(this);
+    this.handleSendTokens = this.handleSendTokens.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
 
     this.state = {
       storageAmount: 0,
       tokenRecipientAddress: '',
       tokenTransferAmount: 0
-    }
+    };
   }
 
   handleSetButton() {
-    this.contracts.Core.methods.set(this.state.storageAmount).send()
+    this.contracts.Core.methods.set(this.state.storageAmount).send();
   }
 
   handleSendTokens() {
-    this.contracts.ERC20Token.methods.transfer(this.state.tokenRecipientAddress, this.state.tokenTransferAmount).send()
+    this.contracts.ERC20Token.methods
+      .transfer(this.state.tokenRecipientAddress, this.state.tokenTransferAmount)
+      .send();
   }
 
   handleInputChange(event) {
-    this.setState({ [event.target.name]: event.target.value })
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   render() {
     // Core Vars
-    var storedData = this.props.drizzleStatus.initialized ? this.contracts.Core.methods.storedData.data() : 'Loading...'
+    var storedData = this.props.drizzleStatus.initialized
+      ? this.contracts.Core.methods.storedData.data()
+      : 'Loading...';
 
     // ERC20Token Vars
-    var tokenSymbol = this.props.drizzleStatus.initialized ? this.contracts.ERC20Token.methods.symbol.data() : ''
-    var tokenSupply = this.props.drizzleStatus.initialized ? this.contracts.ERC20Token.methods.totalSupply.data() : 'Loading...'
-    var tokenBalance = this.props.drizzleStatus.initialized ? this.contracts.ERC20Token.methods.balanceOf.data(this.props.accounts[0]) : 'Loading...'
+    var tokenSymbol = this.props.drizzleStatus.initialized
+      ? this.contracts.ERC20Token.methods.symbol.data()
+      : '';
+    var tokenSupply = this.props.drizzleStatus.initialized
+      ? this.contracts.ERC20Token.methods.totalSupply.data()
+      : 'Loading...';
+    var tokenBalance = this.props.drizzleStatus.initialized
+      ? this.contracts.ERC20Token.methods.balanceOf.data(this.props.accounts[0])
+      : 'Loading...';
 
-    return(
+    return (
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
@@ -48,34 +58,62 @@ class Home extends Component {
 
           <div className="pure-u-1-1">
             <h2>Core</h2>
-            <p><strong>Stored Value</strong>: {storedData}</p>
+            <p>
+              <strong>Stored Value</strong>: {storedData}
+            </p>
             <form className="pure-form pure-form-stacked">
-              <input name="storageAmount" type="number" value={this.state.storageAmount} onChange={this.handleInputChange} />
-              <button className="pure-button" type="button" onClick={this.handleSetButton}>Store Value of {this.state.storageAmount}</button>
+              <input
+                name="storageAmount"
+                type="number"
+                value={this.state.storageAmount}
+                onChange={this.handleInputChange}
+              />
+              <button className="pure-button" type="button" onClick={this.handleSetButton}>
+                Store Value of {this.state.storageAmount}
+              </button>
             </form>
 
-            <br/><br/>
+            <br />
+            <br />
           </div>
 
           <div className="pure-u-1-1">
             <h2>ERC20Token</h2>
-            <p><strong>Total Supply</strong>: {tokenSupply} {tokenSymbol}</p>
-            <p><strong>My Balance</strong>: {tokenBalance}</p>
+            <p>
+              <strong>Total Supply</strong>: {tokenSupply} {tokenSymbol}
+            </p>
+            <p>
+              <strong>My Balance</strong>: {tokenBalance}
+            </p>
             <h3>Send Tokens</h3>
             <form className="pure-form pure-form-stacked">
-              <input name="tokenRecipientAddress" type="text" value={this.state.tokenRecipientAddress} onChange={this.handleInputChange} placeholder="Address" />
-              <input name="tokenTransferAmount" type="number" value={this.state.tokenTransferAmount} onChange={this.handleInputChange} placeholder="Amount" />
-              <button className="pure-button" type="button" onClick={this.handleSendTokens}>Send Tokens to {this.state.tokenRecipientAddress}</button>
+              <input
+                name="tokenRecipientAddress"
+                type="text"
+                value={this.state.tokenRecipientAddress}
+                onChange={this.handleInputChange}
+                placeholder="Address"
+              />
+              <input
+                name="tokenTransferAmount"
+                type="number"
+                value={this.state.tokenTransferAmount}
+                onChange={this.handleInputChange}
+                placeholder="Amount"
+              />
+              <button className="pure-button" type="button" onClick={this.handleSendTokens}>
+                Send Tokens to {this.state.tokenRecipientAddress}
+              </button>
             </form>
           </div>
         </div>
       </main>
-    )
+    );
   }
 }
 
 Home.contextTypes = {
   drizzle: PropTypes.object
-}
+};
 
-export default Home
+export default Home;
