@@ -10,6 +10,7 @@
 @l-bg: white;
 @l-text: black;
 @d-text: white;
+@niceBlue: #5e77ff;
 
 .catalog{
     font-size: @fontSize;
@@ -55,7 +56,7 @@
           }
           .price{
             width: 30%;
-            color: #5e77ff;
+            color: @niceBlue;
           }
           .button{
             width: 20%;
@@ -81,13 +82,6 @@
               width: 1.8rem;
               height: 1.8rem;
             }
-          }
-          .name>div{
-            //background-image: url(../img/icon3.png);
-            
-          }
-          .price>div{
-            //background-image: url(../img/icon4.png);
           }
         }
         .el.header:hover{
@@ -145,7 +139,7 @@
           margin-right: @padding;
           width: 30% - @padding*2;
           height: 300px;
-          background-color: white;
+          background-color: @l-bg;
           .sidebar-wrapper{
             display: flex;
             flex-flow: column;
@@ -163,10 +157,6 @@
                 width: 7rem;
                 height: 7rem;
                 border-radius: 3.5rem;
-                background-image: url(https://avatanplus.com/files/photos/mid/57f3ddf27b36e157909afb49.jpg);
-                background-repeat: no-repeat;
-                background-position: center;
-                background-size: cover;
               }
               
             }
@@ -184,10 +174,6 @@
               .icon{
                 width: 2rem;
                 height: 2rem;
-                //background-image: url(../img/icon4.png);
-                background-size: 100%;
-                background-repeat: no-repeat;
-                background-position: center;
               }
               .number{
                 padding: @padding/2 0;
@@ -229,6 +215,7 @@
                 }
               }
               .time{
+                color: @niceBlue;
                 font-size: 2rem;
                 width: 40% - @padding;
                 margin-left: @padding/2;
@@ -241,28 +228,15 @@
             }
 
             .el.header{
-              .header-icon>div{
+              .header-icon>img{
                 width: 2rem;
                 height: 2rem;
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: 100%;
               }
 
               .project{
                 display: flex;
                 justify-content: center;
-                .header-icon{
-                  >div{
-                    //background-image: url(../img/icon3.png);
-                  }
-                } 
-              }
-              
-              .time .header-icon{
-                >div{
-                  //background-image: url(../img/clock.png);
-                }
+                
               }
             }
           }
@@ -309,7 +283,7 @@
 }
 
 .modal{
-  position: absolute;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   top: 0;
@@ -330,10 +304,70 @@
   .modal-content{
     z-index: 12;
     width: @pageWidth;
-    background-color: white;
+    background-color: @l-bg;
+    display: flex;
+    align-items: center;
+    height: 80vh;
     .modal-content-wrapper{
       width: 100%;
-      height: 80vh;
+      
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+
+      .name, .hash, .price, .description, .button{
+        padding: @padding/2 0;
+      }
+
+      .name{
+        h2{
+          text-align: center;
+        }
+        padding: 0 @padding;
+        
+      }
+      .hash{
+        span{
+          width: 100%;
+          border-top: 2px dashed grey;
+        }
+      }
+      .price{
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        .icon, .number {
+          padding: 0 @padding;
+        }
+        .icon{
+          img{
+            width: 2rem;
+            height: 2rem;
+          }
+        }
+      }
+      .description{
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        h3{
+          text-align: center;
+        }
+      }
+      .button{
+        button{
+          font-size: 1.5rem;
+          background-color: @niceBlue;
+          color: @d-text;
+          border: none;
+          border-radius: @padding;
+          padding: @padding/2 @padding;
+        }
+        button:hover{
+          cursor: pointer;
+          background-color: @niceBlue + #111;
+        }
+      }
     }
   }
 }

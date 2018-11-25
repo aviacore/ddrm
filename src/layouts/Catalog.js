@@ -4,7 +4,8 @@ import {
   fetchContentList,
   resetContentChoice,
   chooseContent,
-  changeTheme
+  changeTheme,
+  buyContent
 } from '../items/actions';
 
 import LightToggler from './LightToggler';
@@ -24,7 +25,13 @@ class CatalogContainer extends Component {
   };
 
   render = () => {
-    const { contentList, resetContentChoice, chosenContentId, chooseContent } = this.props;
+    const { 
+      contentList, 
+      resetContentChoice, 
+      chosenContentId, 
+      chooseContent,
+      buyContent
+    } = this.props;
     const L = this.props.lightTheme;
 
     const list = contentList.map(el => {
@@ -55,25 +62,27 @@ class CatalogContainer extends Component {
         <div className="background" onClick={resetContentChoice} />
         <div className="modal-content tile">
           <div className="modal-content-wrapper">
-            <div className="id-name">
-              <div className="id">
-                <span>contentList[chosenContentId].id</span>
-              </div>
-              <div className="name">
-                <span>contentList[chosenContentId].name</span>
-              </div>
+            <div className="name">
+              <span><h2>{contentList[chosenContentId-1].name}</h2></span>
             </div>
+            
             <div className="hash">
-              <span />
+              <span></span>
             </div>
             <div className="price">
-              <span>contentList[chosenContentId].price</span>
+              <div className="icon">
+                <img src={icon4} />
+              </div>
+              <div className="number">
+                <span>{contentList[chosenContentId-1].price}</span>
+              </div>
             </div>
             <div className="description">
-              <p>contentList[chosenContentId].descr</p>
+              <h3>About</h3>
+              <p>{contentList[chosenContentId-1].descr}</p>
             </div>
             <div className="button">
-              <button type="button">BUY</button>
+              <button type="button" onClick={buyContent}>BUY</button>
             </div>
           </div>
         </div>
@@ -119,7 +128,8 @@ const mapDispatchToProps = dispatch => ({
   chooseContent: id => dispatch(chooseContent(id)),
   fetchContentList: () => dispatch(fetchContentList()),
   resetContentChoice: () => dispatch(resetContentChoice()),
-  changeTheme: () => dispatch(changeTheme())
+  changeTheme: () => dispatch(changeTheme()),
+  buyContent: id => dispatch(buyContent(id))
 });
 
 const mapStateToProps = state => {

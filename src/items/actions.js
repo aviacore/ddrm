@@ -7,6 +7,7 @@ export const CHOOSE_CONTENT = 'CHOOSE_CONTENT';
 export const RESET_CONTENT_CHOICE = 'RESET_CONTENT_CHOICE';
 export const FETCH_PURCHASED_CONTENT_LIST = 'FETCH_PURCHASED_CONTENT_LIST';
 export const CHANGE_THEME = 'CHANGE_THEME';
+export const BUY_CONTENT = 'BUY_CONTENT';
 
 export const getData = dispatch => async () => {
   return dispatch({
@@ -47,3 +48,12 @@ export const changeTheme = () => dispatch => {
     type: CHANGE_THEME
   });
 };
+
+export const buyContent = (id) => dispatch => {
+  return dispatch({
+    type: BUY_CONTENT,
+    data: {
+      id
+    }
+  })
+}

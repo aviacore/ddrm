@@ -1,15 +1,52 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { drizzleConnect } from 'drizzle-react';
+import {
+  fetchPurchasedContentList,
+  changeTheme
+} from '../items/actions';
+import LightToggler from './LightToggler';
 
 import '../css/styles.css';
+import iconBalance from '../img/icon4.png';
+import icon3 from '../img/icon3.png';
+import iconClock from '../img/clock.png';
 
-class Cabinet extends Component {
+class CabinetContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    
+  }
+
+  componentDidMount = () => {
+    this.props.fetchPurchasedContentList();
   }
 
   render = () => {
+
+    const { purchasedContentList, lightTheme, user } = this.props;
+
+    const list = user.purchasedContentList.map( el => {
+      return (
+        <div className="el">
+          <div className="project tile">
+            <div className="id">
+              <span>{el.id}</span>
+            </div>
+            <div className="name">
+              <span>{el.name}</span>
+            </div>
+          </div>
+          <div className="time tile">
+            <div className="time-wrapper">
+              <span>{el.time}</span>
+            </div>
+          </div>
+        </div>
+      )
+    });
+
+    console.log( user.avatarUrl);
+
     return (
       <div className="cabinet">
         <div className="cabinet-wrapper">
@@ -18,94 +55,63 @@ class Cabinet extends Component {
               <div className="sidebar tile">
                 <div className="sidebar-wrapper">
                   <div className="avatar">
-                    <div />
+                    <div style={{backgroundImage: user.avatarUrl}}/>
                   </div>
                   <div className="address">
-                    <span>OX23232E3FE21S...</span>
+                    <span>{user.address}</span>
                   </div>
                   <div className="separator" />
                   <div className="balance">
-                    <div className="icon" />
+                    <img src={iconBalance} className="icon" />
                     <div className="number">
-                      <span>32</span>
+                      <span>{user.balance}</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="list tile">
                 <div className="list-wrapper">
+
                   <div className="el header">
                     <div className="project">
                       <div className="header-icon">
-                        <div />
+                        <img src={icon3} />
                       </div>
                     </div>
                     <div className="time">
                       <div className="time-wrapper header-icon">
-                        <div />
+                        <img src={iconClock} />
                       </div>
                     </div>
                   </div>
 
-                  <div className="el">
-                    <div className="project tile">
-                      <div className="id">
-                        <span>1</span>
-                      </div>
-                      <div className="name">
-                        <span>Project1</span>
-                      </div>
-                    </div>
-                    <div className="time tile">
-                      <div className="time-wrapper">
-                        <span>20</span>
-                        <span>:</span>
-                        <span>43</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="el">
-                    <div className="project tile">
-                      <div className="id">
-                        <span>1</span>
-                      </div>
-                      <div className="name">
-                        <span>Project1</span>
-                      </div>
-                    </div>
-                    <div className="time tile">
-                      <div className="time-wrapper">
-                        <span>20</span>
-                        <span>:</span>
-                        <span>43</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="el">
-                    <div className="project tile">
-                      <div className="id">
-                        <span>1</span>
-                      </div>
-                      <div className="name">
-                        <span>Project1</span>
-                      </div>
-                    </div>
-                    <div className="time tile">
-                      <div className="time-wrapper">
-                        <span>20</span>
-                        <span>:</span>
-                        <span>43</span>
-                      </div>
-                    </div>
-                  </div>
+                  {list}
+
                 </div>
               </div>
             </div>
           </div>
+          <LightToggler />
         </div>
       </div>
     );
   };
 }
+
+
+const mapDispatchToProps = dispatch => ({
+  fetchPurchasedContentList: () => dispatch(fetchPurchasedContentList()),
+  changeTheme: () => dispatch(changeTheme())
+});
+
+const mapStateToProps = state => {
+  return {
+    purchasedContentList: state.items.purchasedContentList,
+    lightTheme: state.items.lightTheme,
+    user: state.items.user
+  };
+};
+
+const Cabinet = drizzleConnect(CabinetContainer, mapStateToProps, mapDispatchToProps);
 
 export default Cabinet;

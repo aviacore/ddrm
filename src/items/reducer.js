@@ -14,14 +14,14 @@ const initialState = {
   chosenContentId: null,
   lightTheme: true,
 
-  username: null,
-  purchasedContentList: [
-    {
-      id: 3,
-      name: 'Project 3',
-      timeLeft: '20min'
-    }
-  ]
+  user: {
+    username: 'Jonh Prodman',
+    avatarUrl: 'https://avatanplus.com/files/photos/mid/57d52a901c3e415718ae42f4.jpg',
+    address: 'OX23232E3FE21S...',
+    purchasedContentList: [],
+    balance: 23
+  }
+  
 };
 
 const reducer = (state = initialState, action) => {
@@ -54,7 +54,8 @@ const reducer = (state = initialState, action) => {
   }
 
   if (action.type === FETCH_PURCHASED_CONTENT_LIST) {
-    return { ...state, purchasedContentList: DataBasePurchased };
+    const user = { ...state.user, purchasedContentList: DataBasePurchased};
+    return { ...state, user };
   }
 
   if (action.type === CHANGE_THEME) {
