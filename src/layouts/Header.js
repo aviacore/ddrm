@@ -7,15 +7,13 @@ import '../css/styles.css';
 class HeaderContainer extends Component {
   constructor(props) {
     super(props);
-    
   }
 
   render = () => {
-
     const L = this.props.lightTheme;
 
     return (
-      <header className={`${L? '':'d-theme'}`}>
+      <header className={`${L ? '' : 'd-theme'}`}>
         <div className="header-wrapper">
           <div className="left">
             <div className="logo" />

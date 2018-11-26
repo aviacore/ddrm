@@ -15,11 +15,6 @@ contract('DDRMCore', function(accounts) {
   const transactionData = toHex('testing');
   const assetId = soliditySha3('testing').substring(0, 10);
 
-  beforeEach('create a Core contract instance', async function() {
-    this.token = await ERC20Example.new({ from: creator });
-    this.core = await DDRMCore.new(this.token.address, { from: creator });
-  });
-
   const clearsApproval = function() {
     it('sets the token approval to zero address', async function() {
       if (this.tx.logs[0].event == 'Transfer') transactionInfo(this.tx, 4);
@@ -51,6 +46,17 @@ contract('DDRMCore', function(accounts) {
     });
   };
 
+  const resets = function() {
+    it('resets the token properties', async function() {
+      transactionInfo(this.tx, 4);
+      await shouldFail.reverting(this.core.ownerOf(1));
+      await shouldFail.reverting(this.core.getApproved(1));
+      await shouldFail.reverting(this.core.assetOf(1));
+      await shouldFail.reverting(this.core.tokenURI(1));
+      await shouldFail.reverting(this.core.endTimeOf(1));
+    });
+  };
+
   const emitsTransferEvent = function() {
     it('emits a Transfer event', async function() {
       let length, index;
@@ -68,6 +74,11 @@ contract('DDRMCore', function(accounts) {
       assert.equal(parseBignumber(this.tx.logs[index].args.tokenId), '1');
     });
   };
+
+  beforeEach('create a Core contract instance', async function() {
+    this.token = await ERC20Example.new({ from: creator });
+    this.core = await DDRMCore.new(this.token.address, { from: creator });
+  });
 
   describe('deploy', function() {
     context('when successfull', function() {
@@ -125,7 +136,7 @@ contract('DDRMCore', function(accounts) {
 
   describe('tokenURI', function() {
     beforeEach('mint a token', async function() {
-      await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+      await this.core.buyToken(accounts[0], assetId);
     });
 
     context('when the specified token exists', function() {
@@ -158,7 +169,7 @@ contract('DDRMCore', function(accounts) {
 
   describe('totalSupply', function() {
     it('gets the total issued tokens amount', async function() {
-      await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+      await this.core.buyToken(accounts[0], assetId);
       assert.equal(parseBignumber(await this.core.totalSupply()), '1');
     });
   });
@@ -172,7 +183,7 @@ contract('DDRMCore', function(accounts) {
   describe('balanceOf', function() {
     context('when successfull', function() {
       it('gets the specified account owned tokens amount', async function() {
-        await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+        await this.core.buyToken(accounts[0], assetId);
         assert.equal(parseBignumber(await this.core.balanceOf(accounts[0])), '1');
         assert.equal(parseBignumber(await this.core.balanceOf(accounts[1])), '0');
       });
@@ -187,7 +198,7 @@ contract('DDRMCore', function(accounts) {
 
   describe('ownerOf', function() {
     beforeEach('mint token', async function() {
-      await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+      await this.core.buyToken(accounts[0], assetId);
     });
 
     context('when the specified token exists', function() {
@@ -205,9 +216,9 @@ contract('DDRMCore', function(accounts) {
 
   describe('getApproved', function() {
     beforeEach('mint and approve tokens', async function() {
-      await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-      await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-      await this.core.approve(accounts[1], 1, { from: accounts[0] });
+      await this.core.buyToken(accounts[0], assetId);
+      await this.core.buyToken(accounts[0], assetId);
+      await this.core.approve(accounts[1], 1);
     });
 
     context('when the specified token exists', function() {
@@ -226,7 +237,7 @@ contract('DDRMCore', function(accounts) {
 
   describe('endTimeOf', function() {
     beforeEach('mint token', async function() {
-      await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+      await this.core.buyToken(accounts[0], assetId);
       this.time = await latest();
     });
 
@@ -245,7 +256,7 @@ contract('DDRMCore', function(accounts) {
 
   describe('assetOf', function() {
     beforeEach('mint token', async function() {
-      await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+      await this.core.buyToken(accounts[0], assetId);
     });
 
     context('when the specified token exists', function() {
@@ -263,7 +274,7 @@ contract('DDRMCore', function(accounts) {
 
   describe('tokenByIndex', function() {
     beforeEach('mint token', async function() {
-      await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+      await this.core.buyToken(accounts[0], assetId);
     });
 
     context('when successfull', function() {
@@ -285,7 +296,7 @@ contract('DDRMCore', function(accounts) {
 
   describe('assetPrice', function() {
     beforeEach('set an asset price', async function() {
-      await this.core.setAssetPrice(assetId, 721, { from: accounts[0] });
+      await this.core.setAssetPrice(assetId, 721);
     });
 
     context('when successfull', function() {
@@ -307,7 +318,7 @@ contract('DDRMCore', function(accounts) {
 
   describe('isApprovedForAll', function() {
     it('gets the specified accounts operator approval state', async function() {
-      await this.core.setApprovalForAll(accounts[1], true, { from: accounts[0] });
+      await this.core.setApprovalForAll(accounts[1], true);
       assert.equal(await this.core.isApprovedForAll(accounts[0], accounts[1]), true);
       assert.equal(await this.core.isApprovedForAll(accounts[1], accounts[0]), false);
     });
@@ -315,7 +326,7 @@ contract('DDRMCore', function(accounts) {
 
   describe('tokenOfOwnerByIndex', function() {
     beforeEach('mint token', async function() {
-      await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+      await this.core.buyToken(accounts[0], assetId);
     });
 
     context('when successfull', function() {
@@ -344,8 +355,8 @@ contract('DDRMCore', function(accounts) {
   describe('approve', function() {
     context('when the msg.sender is a token owner', function() {
       beforeEach('mint and approve token', async function() {
-        await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-        this.tx = await this.core.approve(accounts[1], 1, { from: accounts[0] });
+        await this.core.buyToken(accounts[0], assetId);
+        this.tx = await this.core.approve(accounts[1], 1);
       });
 
       it('sets the specified token approved address', async function() {
@@ -364,8 +375,8 @@ contract('DDRMCore', function(accounts) {
 
     context('when the msg.sender is an operator of the specified token owner', function() {
       beforeEach('mint and approve token', async function() {
-        await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-        await this.core.setApprovalForAll(accounts[1], true, { from: accounts[0] });
+        await this.core.buyToken(accounts[0], assetId);
+        await this.core.setApprovalForAll(accounts[1], true);
         this.tx = await this.core.approve(accounts[1], 1, { from: accounts[1] });
       });
 
@@ -385,14 +396,14 @@ contract('DDRMCore', function(accounts) {
 
     context('when the token owner address specified as a token spender', function() {
       it('reverts', async function() {
-        await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-        await shouldFail.reverting(this.core.approve(accounts[0], 1, { from: accounts[0] }));
+        await this.core.buyToken(accounts[0], assetId);
+        await shouldFail.reverting(this.core.approve(accounts[0], 1));
       });
     });
 
     context("when the msg.sender isn't owner or operator of the specified token", function() {
       it('reverts', async function() {
-        await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+        await this.core.buyToken(accounts[0], assetId);
         await shouldFail.reverting(this.core.approve(accounts[1], 1, { from: accounts[1] }));
       });
     });
@@ -401,7 +412,7 @@ contract('DDRMCore', function(accounts) {
   describe('setApprovalForAll', function() {
     context('when successfull', function() {
       beforeEach('set an operator approval', async function() {
-        this.tx = await this.core.setApprovalForAll(accounts[1], true, { from: accounts[0] });
+        this.tx = await this.core.setApprovalForAll(accounts[1], true);
       });
 
       it('sets the specified accounts operator approval', async function() {
@@ -420,9 +431,7 @@ contract('DDRMCore', function(accounts) {
 
     context('when zero address specified as an operator', function() {
       it('reverts', async function() {
-        await shouldFail.reverting(
-          this.core.setApprovalForAll(ZERO_ADDRESS, true, { from: accounts[0] })
-        );
+        await shouldFail.reverting(this.core.setApprovalForAll(ZERO_ADDRESS, true));
       });
     });
   });
@@ -430,9 +439,8 @@ contract('DDRMCore', function(accounts) {
   describe('transferFrom', function() {
     context('when the msg.sender is a specified token owner', function() {
       beforeEach('mint and transfer token', async function() {
-        for (let i = 0; i < 2; i++)
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-        this.tx = await this.core.transferFrom(accounts[0], accounts[1], 1, { from: accounts[0] });
+        for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
+        this.tx = await this.core.transferFrom(accounts[0], accounts[1], 1);
         this.from = accounts[0];
         this.to = accounts[1];
       });
@@ -445,9 +453,8 @@ contract('DDRMCore', function(accounts) {
 
     context('when the msg.sender is a specified token approval', function() {
       beforeEach('mint and transfer token', async function() {
-        for (let i = 0; i < 2; i++)
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-        await this.core.approve(accounts[1], 1, { from: accounts[0] });
+        for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
+        await this.core.approve(accounts[1], 1);
         this.tx = await this.core.transferFrom(accounts[0], accounts[1], 1, { from: accounts[1] });
         this.from = accounts[0];
         this.to = accounts[1];
@@ -461,9 +468,8 @@ contract('DDRMCore', function(accounts) {
 
     context('when the msg.sender is a specified token owner operator', function() {
       beforeEach('mint and transfer token', async function() {
-        for (let i = 0; i < 2; i++)
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-        await this.core.setApprovalForAll(accounts[1], true, { from: accounts[0] });
+        for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
+        await this.core.setApprovalForAll(accounts[1], true);
         this.tx = await this.core.transferFrom(accounts[0], accounts[1], 1, { from: accounts[1] });
         this.from = accounts[0];
         this.to = accounts[1];
@@ -477,7 +483,7 @@ contract('DDRMCore', function(accounts) {
 
     context("when the specified address isn't owner of the specified token", function() {
       it('reverts', async function() {
-        await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+        await this.core.buyToken(accounts[0], assetId);
         await shouldFail.reverting(
           this.core.transferFrom(accounts[1], accounts[1], 1, {
             from: accounts[0]
@@ -488,7 +494,7 @@ contract('DDRMCore', function(accounts) {
 
     context('when zero address specified as a token recipient', function() {
       it('reverts', async function() {
-        await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+        await this.core.buyToken(accounts[0], assetId);
         await shouldFail.reverting(
           this.core.transferFrom(accounts[0], ZERO_ADDRESS, 1, {
             from: accounts[0]
@@ -511,7 +517,7 @@ contract('DDRMCore', function(accounts) {
       "when the msg.sender isn't owner, approval or operator of the specified token",
       function() {
         it('reverts', async function() {
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+          await this.core.buyToken(accounts[0], assetId);
           await shouldFail.reverting(
             this.core.transferFrom(accounts[0], accounts[1], 1, {
               from: accounts[1]
@@ -527,15 +533,13 @@ contract('DDRMCore', function(accounts) {
       'when the token recipient is a contract that implements the IERC721Receiver interface',
       function() {
         beforeEach('mint and transfer token', async function() {
-          for (let i = 0; i < 2; i++)
-            await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+          for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
           this.receiver = await ERC721Receiver.new({ from: creator });
           this.tx = await sendTransaction(
             this.core,
             'safeTransferFrom',
             'address,address,uint256',
-            [accounts[0], this.receiver.address, 1],
-            { from: accounts[0] }
+            [accounts[0], this.receiver.address, 1]
           );
           this.from = accounts[0];
           this.to = this.receiver.address;
@@ -550,15 +554,12 @@ contract('DDRMCore', function(accounts) {
 
     context('when the msg.sender is a specified token owner', function() {
       beforeEach('mint and transfer token', async function() {
-        for (let i = 0; i < 2; i++)
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-        this.tx = await sendTransaction(
-          this.core,
-          'safeTransferFrom',
-          'address,address,uint256',
-          [accounts[0], accounts[1], 1],
-          { from: accounts[0] }
-        );
+        for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
+        this.tx = await sendTransaction(this.core, 'safeTransferFrom', 'address,address,uint256', [
+          accounts[0],
+          accounts[1],
+          1
+        ]);
         this.from = accounts[0];
         this.to = accounts[1];
       });
@@ -571,9 +572,8 @@ contract('DDRMCore', function(accounts) {
 
     context('when the msg.sender is a specified token approval', function() {
       beforeEach('mint and transfer token', async function() {
-        for (let i = 0; i < 2; i++)
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-        await this.core.approve(accounts[1], 1, { from: accounts[0] });
+        for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
+        await this.core.approve(accounts[1], 1);
         this.tx = await sendTransaction(
           this.core,
           'safeTransferFrom',
@@ -593,9 +593,8 @@ contract('DDRMCore', function(accounts) {
 
     context('when the msg.sender is a specified token owner operator', function() {
       beforeEach('mint and transfer token', async function() {
-        for (let i = 0; i < 2; i++)
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-        await this.core.setApprovalForAll(accounts[1], true, { from: accounts[0] });
+        for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
+        await this.core.setApprovalForAll(accounts[1], true);
         this.tx = await sendTransaction(
           this.core,
           'safeTransferFrom',
@@ -615,15 +614,13 @@ contract('DDRMCore', function(accounts) {
 
     context("when the specified address isn't owner of the specified token", function() {
       it('reverts', async function() {
-        await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+        await this.core.buyToken(accounts[0], assetId);
         await shouldFail.reverting(
-          sendTransaction(
-            this.core,
-            'safeTransferFrom',
-            'address,address,uint256',
-            [accounts[1], accounts[1], 1],
-            { from: accounts[0] }
-          )
+          sendTransaction(this.core, 'safeTransferFrom', 'address,address,uint256', [
+            accounts[1],
+            accounts[1],
+            1
+          ])
         );
       });
     });
@@ -632,15 +629,13 @@ contract('DDRMCore', function(accounts) {
       "when the token recipient is a contract that doesn't implement the IERC721Receiver interface",
       function() {
         it('reverts', async function() {
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+          await this.core.buyToken(accounts[0], assetId);
           await shouldFail.reverting(
-            sendTransaction(
-              this.core,
-              'safeTransferFrom',
-              'address,address,uint256',
-              [accounts[0], this.core.address, 1],
-              { from: accounts[0] }
-            )
+            sendTransaction(this.core, 'safeTransferFrom', 'address,address,uint256', [
+              accounts[0],
+              this.core.address,
+              1
+            ])
           );
         });
       }
@@ -648,15 +643,13 @@ contract('DDRMCore', function(accounts) {
 
     context('when zero address specified as a token recipient', function() {
       it('reverts', async function() {
-        await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+        await this.core.buyToken(accounts[0], assetId);
         await shouldFail.reverting(
-          sendTransaction(
-            this.core,
-            'safeTransferFrom',
-            'address,address,uint256',
-            [accounts[0], ZERO_ADDRESS, 1],
-            { from: accounts[0] }
-          )
+          sendTransaction(this.core, 'safeTransferFrom', 'address,address,uint256', [
+            accounts[0],
+            ZERO_ADDRESS,
+            1
+          ])
         );
       });
     });
@@ -664,13 +657,11 @@ contract('DDRMCore', function(accounts) {
     context("when the specified token doesn't exist", function() {
       it('reverts', async function() {
         await shouldFail.reverting(
-          sendTransaction(
-            this.core,
-            'safeTransferFrom',
-            'address,address,uint256',
-            [accounts[0], accounts[1], 1],
-            { from: accounts[0] }
-          )
+          sendTransaction(this.core, 'safeTransferFrom', 'address,address,uint256', [
+            accounts[0],
+            accounts[1],
+            1
+          ])
         );
       });
     });
@@ -679,7 +670,7 @@ contract('DDRMCore', function(accounts) {
       "when the msg.sender isn't owner, approval or operator of the specified token",
       function() {
         it('reverts', async function() {
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+          await this.core.buyToken(accounts[0], assetId);
           await shouldFail.reverting(
             sendTransaction(
               this.core,
@@ -699,15 +690,13 @@ contract('DDRMCore', function(accounts) {
       'when the token recipient is a contract that implements the IERC721Receiver interface',
       function() {
         beforeEach('mint and transfer token', async function() {
-          for (let i = 0; i < 2; i++)
-            await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+          for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
           this.receiver = await ERC721Receiver.new({ from: creator });
-          this.tx = await this.core.safeTransferFrom(
-            accounts[0],
-            this.receiver.address,
-            1,
-            transactionData,
-            { from: accounts[0] }
+          this.tx = await sendTransaction(
+            this.core,
+            'safeTransferFrom',
+            'address,address,uint256,bytes',
+            [accounts[0], this.receiver.address, 1, transactionData]
           );
           this.from = accounts[0];
           this.to = this.receiver.address;
@@ -722,11 +711,13 @@ contract('DDRMCore', function(accounts) {
 
     context('when the msg.sender is a specified token owner', function() {
       beforeEach('mint and transfer token', async function() {
-        for (let i = 0; i < 2; i++)
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-        this.tx = await this.core.safeTransferFrom(accounts[0], accounts[1], 1, transactionData, {
-          from: accounts[0]
-        });
+        for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
+        this.tx = await sendTransaction(
+          this.core,
+          'safeTransferFrom',
+          'address,address,uint256,bytes',
+          [accounts[0], accounts[1], 1, transactionData]
+        );
         this.from = accounts[0];
         this.to = accounts[1];
       });
@@ -739,12 +730,15 @@ contract('DDRMCore', function(accounts) {
 
     context('when the msg.sender is a specified token approval', function() {
       beforeEach('mint and transfer token', async function() {
-        for (let i = 0; i < 2; i++)
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-        await this.core.approve(accounts[1], 1, { from: accounts[0] });
-        this.tx = await this.core.safeTransferFrom(accounts[0], accounts[1], 1, transactionData, {
-          from: accounts[1]
-        });
+        for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
+        await this.core.approve(accounts[1], 1);
+        this.tx = await sendTransaction(
+          this.core,
+          'safeTransferFrom',
+          'address,address,uint256,bytes',
+          [accounts[0], accounts[1], 1, transactionData],
+          { from: accounts[1] }
+        );
         this.from = accounts[0];
         this.to = accounts[1];
       });
@@ -757,12 +751,15 @@ contract('DDRMCore', function(accounts) {
 
     context('when the msg.sender is a specified token owner operator', function() {
       beforeEach('mint and transfer token', async function() {
-        for (let i = 0; i < 2; i++)
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
-        await this.core.setApprovalForAll(accounts[1], true, { from: accounts[0] });
-        this.tx = await this.core.safeTransferFrom(accounts[0], accounts[1], 1, transactionData, {
-          from: accounts[1]
-        });
+        for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
+        await this.core.setApprovalForAll(accounts[1], true);
+        this.tx = await sendTransaction(
+          this.core,
+          'safeTransferFrom',
+          'address,address,uint256,bytes',
+          [accounts[0], accounts[1], 1, transactionData],
+          { from: accounts[1] }
+        );
         this.from = accounts[0];
         this.to = accounts[1];
       });
@@ -775,11 +772,14 @@ contract('DDRMCore', function(accounts) {
 
     context("when the specified address isn't owner of the specified token", function() {
       it('reverts', async function() {
-        await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+        await this.core.buyToken(accounts[0], assetId);
         await shouldFail.reverting(
-          this.core.safeTransferFrom(accounts[1], accounts[1], 1, transactionData, {
-            from: accounts[0]
-          })
+          sendTransaction(this.core, 'safeTransferFrom', 'address,address,uint256,bytes', [
+            accounts[1],
+            accounts[1],
+            1,
+            transactionData
+          ])
         );
       });
     });
@@ -788,11 +788,14 @@ contract('DDRMCore', function(accounts) {
       "when the token recipient is a contract that doesn't implement the IERC721Receiver interface",
       function() {
         it('reverts', async function() {
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+          await this.core.buyToken(accounts[0], assetId);
           await shouldFail.reverting(
-            this.core.safeTransferFrom(accounts[0], this.core.address, 1, transactionData, {
-              from: accounts[0]
-            })
+            sendTransaction(this.core, 'safeTransferFrom', 'address,address,uint256,bytes', [
+              accounts[0],
+              this.core.address,
+              1,
+              transactionData
+            ])
           );
         });
       }
@@ -800,11 +803,14 @@ contract('DDRMCore', function(accounts) {
 
     context('when zero address specified as a token recipient', function() {
       it('reverts', async function() {
-        await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+        await this.core.buyToken(accounts[0], assetId);
         await shouldFail.reverting(
-          this.core.safeTransferFrom(accounts[0], ZERO_ADDRESS, 1, transactionData, {
-            from: accounts[0]
-          })
+          sendTransaction(this.core, 'safeTransferFrom', 'address,address,uint256,bytes', [
+            accounts[0],
+            ZERO_ADDRESS,
+            1,
+            transactionData
+          ])
         );
       });
     });
@@ -812,9 +818,12 @@ contract('DDRMCore', function(accounts) {
     context("when the specified token doesn't exist", function() {
       it('reverts', async function() {
         await shouldFail.reverting(
-          this.core.safeTransferFrom(accounts[0], accounts[1], 1, transactionData, {
-            from: accounts[0]
-          })
+          sendTransaction(this.core, 'safeTransferFrom', 'address,address,uint256,bytes', [
+            accounts[0],
+            accounts[1],
+            1,
+            transactionData
+          ])
         );
       });
     });
@@ -823,12 +832,75 @@ contract('DDRMCore', function(accounts) {
       "when the msg.sender isn't owner, approval or operator of the specified token",
       function() {
         it('reverts', async function() {
-          await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+          await this.core.buyToken(accounts[0], assetId);
           await shouldFail.reverting(
-            this.core.safeTransferFrom(accounts[0], accounts[1], 1, transactionData, {
-              from: accounts[1]
-            })
+            sendTransaction(
+              this.core,
+              'safeTransferFrom',
+              'address,address,uint256,bytes',
+              [accounts[0], accounts[1], 1, transactionData],
+              { from: accounts[1] }
+            )
           );
+        });
+      }
+    );
+  });
+
+  describe('burn', function() {
+    context('when the msg.sender is a specified token owner', function() {
+      beforeEach('mint and burn token', async function() {
+        for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
+        this.tx = await this.core.burn(1);
+        this.from = accounts[0];
+        this.to = ZERO_ADDRESS;
+      });
+
+      resets();
+      removesTokenFrom();
+      emitsTransferEvent();
+    });
+
+    context('when the msg.sender is a specified token approval', function() {
+      beforeEach('mint and burn token', async function() {
+        for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
+        await this.core.approve(accounts[1], 1);
+        this.tx = await this.core.burn(1, { from: accounts[1] });
+        this.from = accounts[0];
+        this.to = ZERO_ADDRESS;
+      });
+
+      resets();
+      removesTokenFrom();
+      emitsTransferEvent();
+    });
+
+    context('when the msg.sender is a specified token owner operator', function() {
+      beforeEach('mint and burn token', async function() {
+        for (let i = 0; i < 2; i++) await this.core.buyToken(accounts[0], assetId);
+        await this.core.setApprovalForAll(accounts[1], true);
+        this.tx = await this.core.burn(1, { from: accounts[1] });
+        this.from = accounts[0];
+        this.to = ZERO_ADDRESS;
+      });
+
+      resets();
+      removesTokenFrom();
+      emitsTransferEvent();
+    });
+
+    context("when the specified token doesn't exist", function() {
+      it('reverts', async function() {
+        await shouldFail.reverting(this.core.burn(1));
+      });
+    });
+
+    context(
+      "when the msg.sender isn't owner, approval or operator of the specified token",
+      function() {
+        it('reverts', async function() {
+          await this.core.buyToken(accounts[0], assetId);
+          await shouldFail.reverting(this.core.burn(1, { from: accounts[1] }));
         });
       }
     );
@@ -838,9 +910,9 @@ contract('DDRMCore', function(accounts) {
     context('when successfull', function() {
       beforeEach('buy token', async function() {
         await this.token.mint(accounts[0], 20, { from: creator });
-        await this.token.approve(this.core.address, 20, { from: accounts[0] });
+        await this.token.approve(this.core.address, 20);
         await this.core.setAssetPrice(assetId, 20, { from: creator });
-        this.tx = await this.core.buyToken(accounts[0], assetId, { from: accounts[0] });
+        this.tx = await this.core.buyToken(accounts[0], assetId);
         this.from = ZERO_ADDRESS;
         this.to = accounts[0];
       });
@@ -856,9 +928,7 @@ contract('DDRMCore', function(accounts) {
 
     context('when zero address specified as a token recipient', function() {
       it('reverts', async function() {
-        await shouldFail.reverting(
-          this.core.buyToken(ZERO_ADDRESS, assetId, { from: accounts[0] })
-        );
+        await shouldFail.reverting(this.core.buyToken(ZERO_ADDRESS, assetId));
       });
     });
 
@@ -868,9 +938,7 @@ contract('DDRMCore', function(accounts) {
         it('reverts', async function() {
           await this.token.mint(accounts[0], 20, { from: creator });
           await this.core.setAssetPrice(assetId, 20, { from: creator });
-          await shouldFail.reverting(
-            this.core.buyToken(accounts[0], assetId, { from: accounts[0] })
-          );
+          await shouldFail.reverting(this.core.buyToken(accounts[0], assetId));
         });
       }
     );
@@ -880,7 +948,7 @@ contract('DDRMCore', function(accounts) {
     context('when successfull', function() {
       beforeEach('transfer tokens', async function() {
         await this.token.mint(accounts[0], 30, { from: creator });
-        await this.token.transfer(this.core.address, 30, { from: accounts[0] });
+        await this.token.transfer(this.core.address, 30);
         this.tx = await this.core.withdraw({ from: creator });
       });
 
@@ -899,7 +967,7 @@ contract('DDRMCore', function(accounts) {
     context("when the msg.sender isn't contract owner", function() {
       it('reverts', async function() {
         await this.token.mint(accounts[0], 30, { from: creator });
-        await this.token.transfer(this.core.address, 30, { from: accounts[0] });
+        await this.token.transfer(this.core.address, 30);
         await shouldFail.reverting(this.core.withdraw({ from: accounts[1] }));
       });
     });

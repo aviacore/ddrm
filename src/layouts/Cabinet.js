@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { drizzleConnect } from 'drizzle-react';
-import {
-  fetchPurchasedContentList,
-  changeTheme
-} from '../items/actions';
+import { fetchPurchasedContentList, changeTheme } from '../items/actions';
 import LightToggler from './LightToggler';
 
 import '../css/styles.css';
@@ -14,18 +11,16 @@ import iconClock from '../img/clock.png';
 class CabinetContainer extends Component {
   constructor(props) {
     super(props);
-    
   }
 
   componentDidMount = () => {
     this.props.fetchPurchasedContentList();
-  }
+  };
 
   render = () => {
-
     const { purchasedContentList, lightTheme, user } = this.props;
 
-    const list = user.purchasedContentList.map( el => {
+    const list = user.purchasedContentList.map(el => {
       return (
         <div className="el">
           <div className="project tile">
@@ -42,10 +37,10 @@ class CabinetContainer extends Component {
             </div>
           </div>
         </div>
-      )
+      );
     });
 
-    console.log( user.avatarUrl);
+    console.log(user.avatarUrl);
 
     return (
       <div className="cabinet">
@@ -55,7 +50,7 @@ class CabinetContainer extends Component {
               <div className="sidebar tile">
                 <div className="sidebar-wrapper">
                   <div className="avatar">
-                    <div style={{backgroundImage: user.avatarUrl}}/>
+                    <div style={{ backgroundImage: user.avatarUrl }} />
                   </div>
                   <div className="address">
                     <span>{user.address}</span>
@@ -71,7 +66,6 @@ class CabinetContainer extends Component {
               </div>
               <div className="list tile">
                 <div className="list-wrapper">
-
                   <div className="el header">
                     <div className="project">
                       <div className="header-icon">
@@ -86,7 +80,6 @@ class CabinetContainer extends Component {
                   </div>
 
                   {list}
-
                 </div>
               </div>
             </div>
@@ -97,7 +90,6 @@ class CabinetContainer extends Component {
     );
   };
 }
-
 
 const mapDispatchToProps = dispatch => ({
   fetchPurchasedContentList: () => dispatch(fetchPurchasedContentList()),

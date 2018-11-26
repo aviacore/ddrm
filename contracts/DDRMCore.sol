@@ -56,12 +56,30 @@ contract DDRMCore is IERC721Full, Ownable {
   mapping (bytes4 => uint256) private _prices;
 
   /**
+   * @dev Reverts if the `msg.sender` cannot spend the specified token
+   * @param tokenId uint256 ID of the token to query the spender of
+   */
+  modifier canSpend(uint256 tokenId) {
+    require(
+      // solium-disable-next-line operator-whitespace
+      msg.sender == ownerOf(tokenId) ||
+      // solium-disable-next-line operator-whitespace
+      msg.sender == getApproved(tokenId) ||
+      isApprovedForAll(ownerOf(tokenId), msg.sender),
+      "the msg.sender isn't owner, approval or operator of the specified token"
+    );
+    _;
+  }
+
+  /**
    * @dev Constructor sets the ERC20 token instance and registers the ERC165
    * implemented interfaces
    * @param token IERC20 the ERC20 token contract
    */
   constructor(IERC20 token) public {
-    require(address(token) != address(0));
+    // solium-disable-next-line indentation
+    require(address(token) != address(0),
+      "zero address specified as a token contract");
 
     _token = token;
     _registerInterface(_interfaceIdERC165);
@@ -272,16 +290,9 @@ contract DDRMCore is IERC721Full, Ownable {
    * @param to address the tokens recipient
    * @param tokenId uint256 ID of the token to be transferred
    */
-  function transferFrom(address from, address to, uint256 tokenId) public {
-    require(
-      // solium-disable-next-line operator-whitespace
-      msg.sender == ownerOf(tokenId) ||
-      // solium-disable-next-line operator-whitespace
-      msg.sender == getApproved(tokenId) ||
-      isApprovedForAll(from, msg.sender),
-      "the msg.sender isn't owner, approval or operator of the specified token"
-    );
-
+  function transferFrom(address from, address to, uint256 tokenId)
+    public canSpend(tokenId)
+  {
     _clearApproval(tokenId);
     _removeTokenFrom(from, tokenId);
     _addTokenTo(to, tokenId);
@@ -319,6 +330,17 @@ contract DDRMCore is IERC721Full, Ownable {
   {
     transferFrom(from, to, tokenId);
     _callRecipient(from, to, tokenId, data);
+  }
+
+  /**
+   * @dev Burns the specified token
+   * @param tokenId uint256 ID of the token to be burned
+   */
+  function burn(uint256 tokenId) public canSpend(tokenId) {
+    address owner = ownerOf(tokenId);
+    _removeTokenFrom(owner, tokenId);
+    delete _tokens[tokenId];
+    emit Transfer(owner, address(0), tokenId);
   }
 
   /**
@@ -400,9 +422,9 @@ contract DDRMCore is IERC721Full, Ownable {
   function _clearApproval(uint256 tokenId) private {
     require(_exists(tokenId), "the specified token doesn't exist");
 
-    Token storage ownedToken = _tokens[tokenId];
-    if (ownedToken.approval != address(0))
-      ownedToken.approval = address(0);
+    Token storage approvedToken = _tokens[tokenId];
+    if (approvedToken.approval != address(0))
+      approvedToken.approval = address(0);
   }
 
   /**
@@ -415,9 +437,9 @@ contract DDRMCore is IERC721Full, Ownable {
     require(!_exists(tokenId), "the specified token already exists");
 
     Account storage recipient = _accounts[to];
-    Token storage ownerlessToken = _tokens[tokenId];
-    ownerlessToken.owner = to;
-    ownerlessToken.ownedTokensIndex = recipient.ownedTokens.length;
+    Token storage tokenToAdd = _tokens[tokenId];
+    tokenToAdd.owner = to;
+    tokenToAdd.ownedTokensIndex = recipient.ownedTokens.length;
     recipient.ownedTokens.push(tokenId);
   }
 
@@ -431,15 +453,15 @@ contract DDRMCore is IERC721Full, Ownable {
     require(from == ownerOf(tokenId),
       "the specified address isn't the specified token owner");
 
-    Account storage tokenOwner = _accounts[from];
-    Token storage ownedToken = _tokens[tokenId];
-    uint256 lastTokenId = tokenOwner.ownedTokens[balanceOf(from).sub(1)];
+    Account storage owner = _accounts[from];
+    Token storage tokenToRemove = _tokens[tokenId];
+    uint256 lastTokenId = owner.ownedTokens[balanceOf(from).sub(1)];
     Token storage lastToken = _tokens[lastTokenId];
-    tokenOwner.ownedTokens[ownedToken.ownedTokensIndex] = lastTokenId;
-    tokenOwner.ownedTokens.length = tokenOwner.ownedTokens.length.sub(1);
-    lastToken.ownedTokensIndex = ownedToken.ownedTokensIndex;
-    ownedToken.ownedTokensIndex = 0;
-    ownedToken.owner = address(0);
+    owner.ownedTokens[tokenToRemove.ownedTokensIndex] = lastTokenId;
+    owner.ownedTokens.length = owner.ownedTokens.length.sub(1);
+    lastToken.ownedTokensIndex = tokenToRemove.ownedTokensIndex;
+    tokenToRemove.ownedTokensIndex = 0;
+    tokenToRemove.owner = address(0);
   }
 
   /**

@@ -49,11 +49,11 @@ export const changeTheme = () => dispatch => {
   });
 };
 
-export const buyContent = (id) => dispatch => {
+export const buyContent = id => dispatch => {
   return dispatch({
     type: BUY_CONTENT,
     data: {
       id
     }
-  })
-}
+  });
+};

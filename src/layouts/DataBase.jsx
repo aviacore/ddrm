@@ -23,6 +23,18 @@ export const DataBase = [
 ];
 
 export const DataBasePurchased = [
-  new PurchasedContent(DataBase[0].id, DataBase[0].name, DataBase[0].price, DataBase[0].descr, '20min'),
-  new PurchasedContent(DataBase[2].id, DataBase[2].name, DataBase[2].price, DataBase[2].descr, '30min'),
+  new PurchasedContent(
+    DataBase[0].id,
+    DataBase[0].name,
+    DataBase[0].price,
+    DataBase[0].descr,
+    '20min'
+  ),
+  new PurchasedContent(
+    DataBase[2].id,
+    DataBase[2].name,
+    DataBase[2].price,
+    DataBase[2].descr,
+    '30min'
+  )
 ];

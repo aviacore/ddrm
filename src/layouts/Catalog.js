@@ -25,10 +25,10 @@ class CatalogContainer extends Component {
   };
 
   render = () => {
-    const { 
-      contentList, 
-      resetContentChoice, 
-      chosenContentId, 
+    const {
+      contentList,
+      resetContentChoice,
+      chosenContentId,
       chooseContent,
       buyContent
     } = this.props;
@@ -63,26 +63,30 @@ class CatalogContainer extends Component {
         <div className="modal-content tile">
           <div className="modal-content-wrapper">
             <div className="name">
-              <span><h2>{contentList[chosenContentId-1].name}</h2></span>
+              <span>
+                <h2>{contentList[chosenContentId - 1].name}</h2>
+              </span>
             </div>
-            
+
             <div className="hash">
-              <span></span>
+              <span />
             </div>
             <div className="price">
               <div className="icon">
                 <img src={icon4} />
               </div>
               <div className="number">
-                <span>{contentList[chosenContentId-1].price}</span>
+                <span>{contentList[chosenContentId - 1].price}</span>
               </div>
             </div>
             <div className="description">
               <h3>About</h3>
-              <p>{contentList[chosenContentId-1].descr}</p>
+              <p>{contentList[chosenContentId - 1].descr}</p>
             </div>
             <div className="button">
-              <button type="button" onClick={buyContent}>BUY</button>
+              <button type="button" onClick={buyContent}>
+                BUY
+              </button>
             </div>
           </div>
         </div>
@@ -90,23 +94,20 @@ class CatalogContainer extends Component {
     );
 
     return (
-      <div className={`${L? 'catalog' : 'catalog d-theme'}`}>
+      <div className={`${L ? 'catalog' : 'catalog d-theme'}`}>
         <div className="catalog-wrapper">
           <div className="bg" />
           <div className="bg" />
           <div className="bg" />
           <div className="list">
             <div className="list-wrapper tile">
-
               <div className="el header">
                 <div className="id" />
                 <div className="name">
                   <img src={icon3} />
-                  
                 </div>
                 <div className="price">
                   <img src={icon4} />
-                  
                 </div>
                 <div className="button" />
               </div>

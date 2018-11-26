@@ -21,7 +21,6 @@ const initialState = {
     purchasedContentList: [],
     balance: 23
   }
-  
 };
 
 const reducer = (state = initialState, action) => {
@@ -54,7 +53,7 @@ const reducer = (state = initialState, action) => {
   }
 
   if (action.type === FETCH_PURCHASED_CONTENT_LIST) {
-    const user = { ...state.user, purchasedContentList: DataBasePurchased};
+    const user = { ...state.user, purchasedContentList: DataBasePurchased };
     return { ...state, user };
   }
 
