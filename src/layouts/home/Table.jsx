@@ -14,7 +14,7 @@ export default ({ data }) => (
         accessor: 'name'
       },
       {
-        Header: 'Stats',
+        Header: 'Price',
         accessor: 'price'
       }
     ]}

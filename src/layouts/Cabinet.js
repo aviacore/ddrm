@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { drizzleConnect } from 'drizzle-react';
+import PropTypes from 'prop-types'
 import { fetchPurchasedContentList, changeTheme } from '../items/actions';
 import LightToggler from './LightToggler';
 
@@ -8,17 +9,19 @@ import iconBalance from '../img/icon4.png';
 import icon3 from '../img/icon3.png';
 import iconClock from '../img/clock.png';
 
-class CabinetContainer extends Component {
-  constructor(props) {
+class Cabinet extends Component {
+  constructor(props, context) {
     super(props);
+
+    this.web3 = context.drizzle.web3;
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.props.fetchPurchasedContentList();
   };
 
-  render = () => {
-    const { purchasedContentList, lightTheme, user } = this.props;
+  render(){
+    const { purchasedContentList, lightTheme, balance, account, user } = this.props;
 
     const list = user.purchasedContentList.map(el => {
       return (
@@ -41,7 +44,6 @@ class CabinetContainer extends Component {
     });
 
     console.log(user.avatarUrl);
-
     return (
       <div className="cabinet">
         <div className="cabinet-wrapper">
@@ -53,13 +55,13 @@ class CabinetContainer extends Component {
                     <div style={{ backgroundImage: user.avatarUrl }} />
                   </div>
                   <div className="address">
-                    <span>{user.address}</span>
+                    <span>{account}</span>
                   </div>
                   <div className="separator" />
                   <div className="balance">
                     <img src={iconBalance} className="icon" />
                     <div className="number">
-                      <span>{user.balance}</span>
+                      <span>{this.web3.utils.fromWei(balance, 'ether')}</span>
                     </div>
                   </div>
                 </div>
@@ -96,14 +98,22 @@ const mapDispatchToProps = dispatch => ({
   changeTheme: () => dispatch(changeTheme())
 });
 
-const mapStateToProps = state => {
-  return {
-    purchasedContentList: state.items.purchasedContentList,
-    lightTheme: state.items.lightTheme,
-    user: state.items.user
-  };
+const mapStateToProps = ({
+  contracts,
+  accounts: { 0: account },
+  accountBalances,
+  items: { purchasedContentList, lightTheme, user }
+}) => ({
+  purchasedContentList,
+  lightTheme,
+  user,
+  contracts,
+  account,
+  balance: accountBalances[account],
+});
+
+Cabinet.contextTypes = {
+  drizzle: PropTypes.object
 };
 
-const Cabinet = drizzleConnect(CabinetContainer, mapStateToProps, mapDispatchToProps);
-
-export default Cabinet;
+export default drizzleConnect(Cabinet, mapStateToProps, mapDispatchToProps);

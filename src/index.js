@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { DrizzleProvider } from 'drizzle-react';
 import { Router, Route } from 'react-router';
+import { LoadingContainer } from 'drizzle-react-components';
 
 // Layouts
 import App from './App';
@@ -11,9 +12,11 @@ import drizzleOptions from './drizzleOptions';
 
 ReactDOM.render(
   <DrizzleProvider options={drizzleOptions} store={store}>
-    <Router history={history} store={store}>
-      <App />
-    </Router>
+    <LoadingContainer>
+      <Router history={history} store={store}>
+        <App />
+      </Router>
+    </LoadingContainer>
   </DrizzleProvider>,
   document.getElementById('root')
 );

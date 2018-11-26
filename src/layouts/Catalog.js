@@ -16,23 +16,19 @@ import icon4 from '../img/icon4.png';
 import iconArrow from '../img/arrow.png';
 
 class CatalogContainer extends Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    this.props.fetchContentList();
   }
 
-  componentDidMount = () => {
-    this.props.fetchContentList();
-  };
-
-  render = () => {
+  render() {
     const {
       contentList,
       resetContentChoice,
       chosenContentId,
       chooseContent,
-      buyContent
+      buyContent,
+      lightTheme
     } = this.props;
-    const L = this.props.lightTheme;
 
     const list = contentList.map(el => {
       const chooseThisContent = () => {
@@ -94,7 +90,7 @@ class CatalogContainer extends Component {
     );
 
     return (
-      <div className={`${L ? 'catalog' : 'catalog d-theme'}`}>
+      <div className={lightTheme ? 'catalog' : 'catalog d-theme'}>
         <div className="catalog-wrapper">
           <div className="bg" />
           <div className="bg" />
@@ -122,7 +118,7 @@ class CatalogContainer extends Component {
         </div>
       </div>
     );
-  };
+  }
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -133,13 +129,11 @@ const mapDispatchToProps = dispatch => ({
   buyContent: id => dispatch(buyContent(id))
 });
 
-const mapStateToProps = state => {
-  return {
-    contentList: state.items.contentList,
-    chosenContentId: state.items.chosenContentId,
-    lightTheme: state.items.lightTheme
-  };
-};
+const mapStateToProps = ({ items: { contentList, chosenContentId, lightTheme } }) => ({
+  contentList,
+  chosenContentId,
+  lightTheme
+});
 
 const Catalog = drizzleConnect(CatalogContainer, mapStateToProps, mapDispatchToProps);
 
