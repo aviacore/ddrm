@@ -26,13 +26,13 @@ contract DDRMCore is IERC721Full, Ownable {
 
   IERC20 private _token;
 
-  string private _name = "DDRM";
-  string private _symbol = "DDRM";
   bytes4 private _onERC721Received = 0x150b7a02;
   bytes4 private _interfaceIdERC165 = 0x01ffc9a7;
   bytes4 private _interfaceIdERC721 = 0x80ac58cd;
   bytes4 private _interfaceIdERC721Enumerable = 0x780e9d63;
   bytes4 private _interfaceIdERC721Metadata = 0x5b5e139f;
+  string private _name = "DDRM";
+  string private _symbol = "DDRM";
   uint256[] private _allTokens;
 
   struct Account {
@@ -45,8 +45,8 @@ contract DDRMCore is IERC721Full, Ownable {
     address approval;
     bytes4 asset;
     string uri;
-    uint256 ownedTokensIndex;
     uint256 allTokensIndex;
+    uint256 ownedTokensIndex;
     uint256 endTime;
   }
 
