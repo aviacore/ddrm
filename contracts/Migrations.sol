@@ -1,37 +1,26 @@
 pragma solidity ^0.4.24;
 
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+contract Migrations {
+  address public owner;
+  // solium-disable-next-line mixedcase
+  uint256 public last_completed_migration;
 
-/**
- * @title Migrations
- * @author Truffle Suite (https://truffleframework.com/)
- * @author rjkz808
- *
- *  ███╗   ███╗██╗ ██████╗ ██████╗  █████╗ ████████╗██╗ ██████╗ ███╗   ██╗███████╗
- *  ████╗ ████║██║██╔════╝ ██╔══██╗██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║██╔════╝
- *  ██╔████╔██║██║██║  ███╗██████╔╝███████║   ██║   ██║██║   ██║██╔██╗ ██║███████╗
- *  ██║╚██╔╝██║██║██║   ██║██╔══██╗██╔══██║   ██║   ██║██║   ██║██║╚██╗██║╚════██║
- *  ██║ ╚═╝ ██║██║╚██████╔╝██║  ██║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║███████║
- *  ╚═╝     ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
- *
- */
-contract Migrations is Ownable {
-  uint256 public lastCompletedMigration;
-
-  /**
-   * @dev Sets the last completed migration
-   * @param completed uint256 the completed migration
-   */
-  function setCompleted(uint256 completed) public onlyOwner {
-    lastCompletedMigration = completed;
+  modifier restricted() {
+    require(msg.sender == owner, "the msg.sender isn't contract owner");
+    _;
   }
 
-  /**
-   * @dev Updates the new Migration contract
-   * @param newAddress address the Migrations contract
-   */
-  function upgrade(address newAddress) public onlyOwner {
-    Migrations upgraded = Migrations(newAddress);
-    upgraded.setCompleted(lastCompletedMigration);
+  constructor() public {
+    owner = msg.sender;
+  }
+
+  function setCompleted(uint256 completed) public restricted {
+    last_completed_migration = completed;
+  }
+
+  // solium-disable-next-line mixedcase
+  function upgrade(address new_address) public restricted {
+    Migrations upgraded = Migrations(new_address);
+    upgraded.setCompleted(last_completed_migration);
   }
 }
