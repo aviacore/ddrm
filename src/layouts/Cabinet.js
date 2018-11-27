@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { drizzleConnect } from 'drizzle-react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { fetchPurchasedContentList, changeTheme } from '../items/actions';
 import LightToggler from './LightToggler';
 
@@ -18,9 +18,9 @@ class Cabinet extends Component {
 
   componentDidMount() {
     this.props.fetchPurchasedContentList();
-  };
+  }
 
-  render(){
+  render() {
     const { purchasedContentList, lightTheme, balance, account, user } = this.props;
 
     const list = user.purchasedContentList.map(el => {
@@ -90,7 +90,7 @@ class Cabinet extends Component {
         </div>
       </div>
     );
-  };
+  }
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -109,7 +109,7 @@ const mapStateToProps = ({
   user,
   contracts,
   account,
-  balance: accountBalances[account],
+  balance: accountBalances[account]
 });
 
 Cabinet.contextTypes = {
