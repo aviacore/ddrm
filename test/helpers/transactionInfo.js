@@ -1,21 +1,13 @@
-const style = require('ansi-styles');
+const chalk = require('chalk');
 
 module.exports = (tx, tabs) => {
-  if (typeof tx != 'object')
+  if (typeof tx !== 'object')
     throw new TypeError(`Invliad type of tx. Expected: object, given: ${typeof tx}`);
-  if (typeof tabs != 'number')
+  if (typeof tabs !== 'number')
     throw new TypeError(`Invliad type of tabs. Expected: number, given: ${typeof tabs}`);
-  if (tabs < 0) throw new Error(`Invliad tabs value. It should be >= 0`);
+  if (tabs < 0) throw new Error(`Invliad tabs value. Expected: >= 0, given: ${tabs}`);
 
   let space = '';
   for (let i = 0; i < tabs; i++) space += '  ';
-  console.log(
-    space +
-      style.green.open +
-      '√ ' +
-      style.green.close +
-      style.gray.open +
-      `gas used: ${tx.receipt.gasUsed}` +
-      style.gray.close
-  );
+  console.log(`${space}${chalk.green('✓')} ${chalk.gray(`gas used: ${tx.receipt.gasUsed}`)}`);
 };
