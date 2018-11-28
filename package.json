@@ -33,6 +33,7 @@
     "lint:sol": "./node_modules/.bin/solium -d .",
     "lint:sol:fix": "./node_modules/.bin/solium -d . --fix",
     "migrate": "./node_modules/.bin/truffle migrate --network development --reset",
+    "prepare": "npm run build",
     "start": "node scripts/start.js",
     "test": "npm run test:js && npm run test:sol",
     "test:js": "node scripts/test.js --env=jsdom",
