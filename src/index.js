@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { DrizzleProvider } from 'drizzle-react';
-import { Router, Route } from 'react-router';
+import { Router } from 'react-router';
 import { LoadingContainer } from 'drizzle-react-components';
 
 // Layouts

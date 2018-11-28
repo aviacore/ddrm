@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { drizzleConnect } from 'drizzle-react';
 
-import { fetchPurchasedContentList, changeTheme } from '../../items/actions';
+import { fetchPurchasedContentList, changeTheme } from '../Catalog/actions';
 import LightToggler from '../LightToggler';
 import PurchasedList from './PurchasedList';
 
@@ -22,7 +22,7 @@ class Cabinet extends Component {
   }
 
   render() {
-    const { purchasedContentList, lightTheme, balance, account, user } = this.props;
+    const { balance, account, user } = this.props;
 
     console.log(user.avatarUrl);
     return (

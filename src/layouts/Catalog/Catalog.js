@@ -6,7 +6,7 @@ import {
   chooseContent,
   changeTheme,
   buyContent
-} from '../../items/actions';
+} from './actions';
 
 import LightToggler from '../LightToggler';
 

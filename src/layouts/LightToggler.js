@@ -1,6 +1,6 @@
 import React from 'react';
 import { drizzleConnect } from 'drizzle-react';
-import { changeTheme } from '../items/actions';
+import { changeTheme } from './Catalog/actions';
 
 const LightTogglerContainer = props => {
   const L = props.lightTheme;
