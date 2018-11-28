@@ -6,14 +6,13 @@ import {
   chooseContent,
   changeTheme,
   buyContent
-} from '../items/actions';
+} from '../../items/actions';
 
-import LightToggler from './LightToggler';
-import '../css/styles.css';
+import LightToggler from '../LightToggler';
 
-import icon3 from '../img/icon3.png';
-import icon4 from '../img/icon4.png';
-import iconArrow from '../img/arrow.png';
+import icon3 from '../../img/icon3.png';
+import icon4 from '../../img/icon4.png';
+import iconArrow from '../../img/arrow.png';
 
 class CatalogContainer extends Component {
   componentDidMount() {
@@ -30,28 +29,22 @@ class CatalogContainer extends Component {
       lightTheme
     } = this.props;
 
-    const list = contentList.map(el => {
-      const chooseThisContent = () => {
-        chooseContent(el.id);
-      };
-
-      return (
-        <div className="el tile" onClick={chooseThisContent} key={el.id}>
-          <div className="id">
-            <span>{el.id}</span>
-          </div>
-          <div className="name">
-            <span>{el.name}</span>
-          </div>
-          <div className="price">
-            <span>{el.price}</span>
-          </div>
-          <div className="button">
-            <img src={iconArrow} />
-          </div>
+    const list = contentList.map(el => (
+      <div className="el tile" onClick={() => chooseContent(el.id)} key={el.id}>
+        <div className="id">
+          <span>{el.id}</span>
         </div>
-      );
-    });
+        <div className="name">
+          <span>{el.name}</span>
+        </div>
+        <div className="price">
+          <span>{el.price}</span>
+        </div>
+        <div className="button">
+          <img src={iconArrow} />
+        </div>
+      </div>
+    ));
 
     const modal = chosenContentId && (
       <div className="modal">

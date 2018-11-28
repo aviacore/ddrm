@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik:500');
-
 @padding: 1rem;
 @pageWidth: 70%;
 @fontSize: 1.2rem;
@@ -12,12 +10,17 @@
 @d-text: white;
 @niceBlue: #5e77ff;
 
-.catalog{
-    font-size: @fontSize;
-    width: 100vw;
-    height: 100vh;
-    background-image: url(../img/backgr-light.png);
-  .catalog-wrapper{
+.admin {
+
+  padding-top: 10vh;
+}
+
+.catalog {
+  font-size: @fontSize;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../img/backgr-light.png);
+  .catalog-wrapper {
     width: 100%;
     height: 100%;
     display: flex;
@@ -25,11 +28,11 @@
     position: relative;
     background-color: transparent;
     padding-top: 10vh;
-    
-    .list{
+
+    .list {
       width: @pageWidth;
       z-index: 5;
-      .list-wrapper{
+      .list-wrapper {
         width: 100%;
         height: 80%;
         background-color: @l-bg;
@@ -37,89 +40,89 @@
         flex-flow: column;
         align-items: center;
         padding: @padding*3 @padding*2;
-        .el{
+        .el {
           width: 80%;
           display: flex;
           flex-flow: row;
           margin-bottom: @padding;
           font-size: 1.3rem;
-          .id, .name, .price, .button{
-            padding: @padding/2;
+          .id,
+          .name,
+          .price,
+          .button {
+            padding: @padding / 2;
             display: flex;
             justify-content: center;
           }
-          .id{
+          .id {
             width: 10%;
           }
-          .name{
+          .name {
             width: 40%;
           }
-          .price{
+          .price {
             width: 30%;
             color: @niceBlue;
           }
-          .button{
+          .button {
             width: 20%;
             display: flex;
             justify-content: center;
-            img{
+            img {
               width: 1.4rem;
               height: 0.7rem;
             }
           }
-          
         }
-        .el:hover{
+        .el:hover {
           cursor: pointer;
           background-color: #ededed;
         }
 
-        .el.header{
+        .el.header {
           background-color: transparent;
           cursor: auto;
-          .name, .price{
-            >img{
+          .name,
+          .price {
+            > img {
               width: 1.8rem;
               height: 1.8rem;
             }
           }
         }
-        .el.header:hover{
+        .el.header:hover {
           background-color: transparent;
         }
       }
     }
-    
-    
   }
 }
 
-.catalog.d-theme{
+.catalog.d-theme {
   background-image: url(../img/backgr-dark.jpg);
 
-  .list-wrapper{
+  .list-wrapper {
     background-color: @d-bg-block;
-    .el{
+    .el {
       color: @d-text;
       background-color: @d-bg-el;
     }
-    .el.header{
+    .el.header {
       background-color: inherit;
       color: @d-text;
     }
-    .el:hover{
+    .el:hover {
       background-color: #333;
     }
-
   }
 }
 
-.cabinet{
+.cabinet {
   font-size: @fontSize;
   width: 100vw;
   height: 100vh;
   background-image: url(../img/backgr-light.png);
-  .cabinet-wrapper{
+  .cabinet-wrapper {
     width: 100%;
     height: 100%;
     display: flex;
@@ -127,99 +130,101 @@
     position: relative;
     background-color: transparent;
     padding-top: 10vh;
-    
-    .page{
+
+    .page {
       width: @pageWidth;
       z-index: 5;
-      .page-wrapper{
+      .page-wrapper {
         width: 100%;
         display: flex;
         flex-flow: row;
-        .sidebar{
+        .sidebar {
           margin-right: @padding;
           width: 30% - @padding*2;
           height: 300px;
           background-color: @l-bg;
-          .sidebar-wrapper{
+          .sidebar-wrapper {
             display: flex;
             flex-flow: column;
             align-items: center;
-            .avatar, .address, .balance, .separator{
+            .avatar,
+            .address,
+            .balance,
+            .separator {
               width: 100%;
               display: flex;
               justify-content: center;
             }
-            
-            .avatar{
+
+            .avatar {
               display: flex;
               justify-content: center;
-              >div{
+              > div {
                 width: 7rem;
                 height: 7rem;
                 border-radius: 3.5rem;
               }
-              
             }
-            .address{
+            .address {
               padding: @padding 0;
             }
-            .separator{
+            .separator {
               border-top: 2px dashed grey;
             }
-            .balance{
+            .balance {
               padding: @padding 0;
               display: flex;
               flex-flow: column;
               align-items: center;
-              .icon{
+              .icon {
                 width: 2rem;
                 height: 2rem;
               }
-              .number{
-                padding: @padding/2 0;
+              .number {
+                padding: @padding / 2 0;
               }
             }
           }
         }
 
-        .list{
+        .list {
           padding-top: @padding*2;
           padding-bottom: @padding*2;
           margin-left: @padding;
           width: 70% - @padding*2;
-          
+
           background-color: white;
-          .list-wrapper{
+          .list-wrapper {
             width: 100%;
             display: flex;
             flex-flow: column;
-            
-            .el{
+
+            .el {
               margin-bottom: @padding;
               width: 100%;
               display: flex;
               flex-flow: row;
-              .project{
+              .project {
                 display: flex;
                 flex-flow: row;
                 align-items: center;
                 width: 60% - @padding;
-                margin-right: @padding/2;
-                .id{
+                margin-right: @padding / 2;
+                .id {
                   display: flex;
                   justify-content: center;
                   width: 30%;
                 }
-                .name{
+                .name {
                   width: 70%;
                 }
               }
-              .time{
+              .time {
                 color: @niceBlue;
                 font-size: 2rem;
                 width: 40% - @padding;
-                margin-left: @padding/2;
-                .time-wrapper{
+                margin-left: @padding / 2;
+                .time-wrapper {
                   width: 100%;
                   display: flex;
                   justify-content: center;
@@ -227,16 +232,15 @@
               }
             }
 
-            .el.header{
-              .header-icon>img{
+            .el.header {
+              .header-icon > img {
                 width: 2rem;
                 height: 2rem;
               }
 
-              .project{
+              .project {
                 display: flex;
                 justify-content: center;
-                
               }
             }
           }
@@ -246,7 +250,7 @@
   }
 }
 
-.bg{
+.bg {
   background-repeat: no-repeat;
   width: 100%;
   height: 100%;
@@ -257,32 +261,32 @@
   left: 0;
   background-color: transparent;
 }
-.bg:nth-of-type(1){
+.bg:nth-of-type(1) {
   background-image: url(../img/f1.png);
   background-position: 50% 100%;
   background-size: 100%;
   z-index: 3;
 }
-.bg:nth-of-type(2){
+.bg:nth-of-type(2) {
   background-image: url(../img/f2.png);
   background-position: 50% 90%;
   background-size: 110%;
   z-index: 2;
 }
-.bg:nth-of-type(3){
+.bg:nth-of-type(3) {
   background-image: url(../img/f3.png);
   background-position: 50% 80%;
   background-size: 110%;
   z-index: 1;
 }
 
-.tile{
+.tile {
   padding: @padding;
   border-radius: @padding;
-  box-shadow: 10px 5px 40px rgba(150,150,150,.4);
+  box-shadow: 10px 5px 40px rgba(150, 150, 150, 0.4);
 }
 
-.modal{
+.modal {
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -292,78 +296,82 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  .background{
+  .background {
     position: absolute;
     width: 100vw;
     height: 100vh;
     top: 0;
     left: 0;
     z-index: 11;
-    background-color: rgba(0,0,0,.5);
+    background-color: rgba(0, 0, 0, 0.5);
   }
-  .modal-content{
+  .modal-content {
     z-index: 12;
     width: @pageWidth;
     background-color: @l-bg;
     display: flex;
     align-items: center;
     height: 80vh;
-    .modal-content-wrapper{
+    .modal-content-wrapper {
       width: 100%;
-      
+
       display: flex;
       flex-flow: column;
       align-items: center;
 
-      .name, .hash, .price, .description, .button{
-        padding: @padding/2 0;
+      .name,
+      .hash,
+      .price,
+      .description,
+      .button {
+        padding: @padding / 2 0;
       }
 
-      .name{
-        h2{
+      .name {
+        h2 {
           text-align: center;
         }
         padding: 0 @padding;
-        
       }
-      .hash{
-        span{
+      .hash {
+        span {
           width: 100%;
           border-top: 2px dashed grey;
         }
       }
-      .price{
+      .price {
         display: flex;
         flex-flow: row;
         align-items: center;
-        .icon, .number {
+        .icon,
+        .number {
           padding: 0 @padding;
         }
-        .icon{
-          img{
+        .icon {
+          img {
             width: 2rem;
             height: 2rem;
           }
         }
       }
-      .description{
+      .description {
         display: flex;
         flex-flow: column;
         align-items: center;
-        h3{
+        h3 {
           text-align: center;
         }
       }
-      .button{
-        button{
+      .button {
+        button {
           font-size: 1.5rem;
           background-color: @niceBlue;
           color: @d-text;
           border: none;
           border-radius: @padding;
-          padding: @padding/2 @padding;
+          padding: @padding / 2 @padding;
         }
-        button:hover{
+        button:hover {
           cursor: pointer;
           background-color: @niceBlue + #111;
         }
@@ -371,12 +379,12 @@
     }
   }
 }
-.background:hover{
+.background:hover {
   cursor: pointer;
 }
 
-header{
-  background-image: url("../img/backgr-light.png");
+header {
+  background-image: url('../img/backgr-light.png');
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -384,72 +392,66 @@ header{
   position: fixed;
   top: 0;
   left: 0;
-  .header-wrapper{
+  .header-wrapper {
     padding: @padding 0;
     display: flex;
     flex-flow: row;
     justify-content: space-between;
     width: @pageWidth;
-    .left{
-      div.logo{
+    .left {
+      div.logo {
         width: 50px;
         height: 50px;
         border-radius: 25px;
         background-color: grey;
       }
     }
-    .right{
-      .nav-buttons{
+    .right {
+      .nav-buttons {
         display: flex;
         flex-flow: row;
         justify-content: center;
-        .link-to-catalog, .link-to-cabinet {
+        .link-to-catalog,
+        .link-to-cabinet {
           padding-left: @padding*2;
-          .icon{
+          .icon {
             width: 3rem;
             height: 3rem;
           }
         }
-        .link-to-catalog{
-          
-          
+        .link-to-catalog {
         }
-        .link-to-cabinet{
-          
+        .link-to-cabinet {
         }
       }
     }
-      
   }
-
 }
 
-header.d-theme{
-  background-image: url("../img/backgr-dark.jpg");
+header.d-theme {
+  background-image: url('../img/backgr-dark.jpg');
 }
 
-
-.light-toggler-wrapper{
+.light-toggler-wrapper {
   z-index: 5;
   position: fixed;
   bottom: 10vh;
   right: 5vw;
-  
-  button{
+
+  button {
     width: 2rem;
     height: 2rem;
     border-radius: 1rem;
     border: none;
   }
-  button:hover{
+  button:hover {
     cursor: pointer;
   }
-  .light-toggler.l-theme{
+  .light-toggler.l-theme {
     background-color: black;
   }
-  .light-toggler.d-theme{
+  .light-toggler.d-theme {
     border: 2px solid black;
     background-color: white;
   }
-  
 }

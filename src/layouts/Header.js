@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import { Link } from 'react-router-dom';
 import { drizzleConnect } from 'drizzle-react';
-
-import '../css/styles.css';
 
 const HeaderContainer = ({ lightTheme }) => (
   <header className={`${lightTheme ? '' : 'd-theme'}`}>

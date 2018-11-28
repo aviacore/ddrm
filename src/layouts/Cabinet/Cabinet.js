@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { drizzleConnect } from 'drizzle-react';
 import PropTypes from 'prop-types';
-import { fetchPurchasedContentList, changeTheme } from '../items/actions';
-import LightToggler from './LightToggler';
+import { drizzleConnect } from 'drizzle-react';
 
-import '../css/styles.css';
-import iconBalance from '../img/icon4.png';
-import icon3 from '../img/icon3.png';
-import iconClock from '../img/clock.png';
+import { fetchPurchasedContentList, changeTheme } from '../../items/actions';
+import LightToggler from '../LightToggler';
+import PurchasedList from './PurchasedList';
+
+import iconBalance from '../../img/icon4.png';
+import icon3 from '../../img/icon3.png';
+import iconClock from '../../img/clock.png';
 
 class Cabinet extends Component {
   constructor(props, context) {
@@ -22,26 +23,6 @@ class Cabinet extends Component {
 
   render() {
     const { purchasedContentList, lightTheme, balance, account, user } = this.props;
-
-    const list = user.purchasedContentList.map(el => {
-      return (
-        <div className="el">
-          <div className="project tile">
-            <div className="id">
-              <span>{el.id}</span>
-            </div>
-            <div className="name">
-              <span>{el.name}</span>
-            </div>
-          </div>
-          <div className="time tile">
-            <div className="time-wrapper">
-              <span>{el.time}</span>
-            </div>
-          </div>
-        </div>
-      );
-    });
 
     console.log(user.avatarUrl);
     return (
@@ -81,7 +62,7 @@ class Cabinet extends Component {
                     </div>
                   </div>
 
-                  {list}
+                  <PurchasedList items={user.purchasedContentList} />
                 </div>
               </div>
             </div>
