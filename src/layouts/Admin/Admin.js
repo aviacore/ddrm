@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ContractData, ContractForm } from 'drizzle-react-components';
 import { drizzleConnect } from 'drizzle-react';
-const { soliditySha3 } = require('web3-utils');
+import { soliditySha3 } from 'web3-utils';
 
 class Admin extends Component {
   state = { assetId: '' };

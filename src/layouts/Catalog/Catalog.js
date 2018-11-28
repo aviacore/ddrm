@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { drizzleConnect } from 'drizzle-react';
-import {
-  fetchContentList,
-  resetContentChoice,
-  chooseContent,
-  changeTheme,
-  buyContent
-} from './actions';
+import AssetsList from './AssetsList';
+import ChosenModal from './ChosenModal';
+import { fetchContentList } from './actions';
 
 import LightToggler from '../LightToggler';
 
 import icon3 from '../../img/icon3.png';
 import icon4 from '../../img/icon4.png';
-import iconArrow from '../../img/arrow.png';
 
 class CatalogContainer extends Component {
   componentDidMount() {
@@ -20,67 +15,7 @@ class CatalogContainer extends Component {
   }
 
   render() {
-    const {
-      contentList,
-      resetContentChoice,
-      chosenContentId,
-      chooseContent,
-      buyContent,
-      lightTheme
-    } = this.props;
-
-    const list = contentList.map(el => (
-      <div className="el tile" onClick={() => chooseContent(el.id)} key={el.id}>
-        <div className="id">
-          <span>{el.id}</span>
-        </div>
-        <div className="name">
-          <span>{el.name}</span>
-        </div>
-        <div className="price">
-          <span>{el.price}</span>
-        </div>
-        <div className="button">
-          <img src={iconArrow} />
-        </div>
-      </div>
-    ));
-
-    const modal = chosenContentId && (
-      <div className="modal">
-        <div className="background" onClick={resetContentChoice} />
-        <div className="modal-content tile">
-          <div className="modal-content-wrapper">
-            <div className="name">
-              <span>
-                <h2>{contentList[chosenContentId - 1].name}</h2>
-              </span>
-            </div>
-
-            <div className="hash">
-              <span />
-            </div>
-            <div className="price">
-              <div className="icon">
-                <img src={icon4} />
-              </div>
-              <div className="number">
-                <span>{contentList[chosenContentId - 1].price}</span>
-              </div>
-            </div>
-            <div className="description">
-              <h3>About</h3>
-              <p>{contentList[chosenContentId - 1].descr}</p>
-            </div>
-            <div className="button">
-              <button type="button" onClick={buyContent}>
-                BUY
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    const { chosenContentId, lightTheme } = this.props;
 
     return (
       <div className={lightTheme ? 'catalog' : 'catalog d-theme'}>
@@ -101,13 +36,13 @@ class CatalogContainer extends Component {
                 <div className="button" />
               </div>
 
-              {list}
+              <AssetsList />
             </div>
           </div>
 
           <LightToggler />
 
-          {modal}
+          {chosenContentId && <ChosenModal />}
         </div>
       </div>
     );
@@ -115,15 +50,10 @@ class CatalogContainer extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  chooseContent: id => dispatch(chooseContent(id)),
-  fetchContentList: () => dispatch(fetchContentList()),
-  resetContentChoice: () => dispatch(resetContentChoice()),
-  changeTheme: () => dispatch(changeTheme()),
-  buyContent: id => dispatch(buyContent(id))
+  fetchContentList: () => dispatch(fetchContentList())
 });
 
-const mapStateToProps = ({ items: { contentList, chosenContentId, lightTheme } }) => ({
-  contentList,
+const mapStateToProps = ({ items: { chosenContentId, lightTheme } }) => ({
   chosenContentId,
   lightTheme
 });
