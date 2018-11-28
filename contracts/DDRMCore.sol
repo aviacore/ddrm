@@ -260,7 +260,7 @@ contract DDRMCore is IERC721Full, Ownable {
   function approve(address spender, uint256 tokenId) public {
     require(
       spender != ownerOf(tokenId),
-      "the msg.sender cannot be the owned token approval");
+      "the specified address cannot be the token approval");
     require(
       msg.sender == ownerOf(tokenId) ||
       isApprovedForAll(ownerOf(tokenId), msg.sender),

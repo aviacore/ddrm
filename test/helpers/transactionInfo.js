@@ -1,5 +1,10 @@
 const chalk = require('chalk');
 
+/**
+ * Logs the specified transaction information
+ * @param {object} tx the transaction object to log the gas usage of
+ * @param {number} tabs amount of the tabulations to paste before the text
+ */
 module.exports = (tx, tabs) => {
   if (typeof tx !== 'object')
     throw new TypeError(`Invliad type of tx. Expected: object, given: ${typeof tx}`);

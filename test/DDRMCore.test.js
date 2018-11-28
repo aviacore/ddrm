@@ -2,7 +2,6 @@ const { duration, increase, latest } = require('openzeppelin-solidity/test/helpe
 const { sendTransaction } = require('openzeppelin-solidity/test/helpers/sendTransaction');
 const { soliditySha3, toHex } = require('web3-utils');
 const { ZERO_ADDRESS } = require('openzeppelin-solidity/test/helpers/constants');
-const parseBignumber = require('./helpers/parseBignumber');
 const shouldFail = require('openzeppelin-solidity/test/helpers/shouldFail');
 const transactionInfo = require('./helpers/transactionInfo');
 
@@ -18,31 +17,31 @@ contract('DDRMCore', accounts => {
   const clearsApproval = () => {
     it('sets the token approval to zero address', async () => {
       if (this.tx.logs[0].event == 'Transfer') transactionInfo(this.tx, 4);
-      assert.equal(parseBignumber(await this.core.getApproved(1)), ZERO_ADDRESS);
+      assert.equal(await this.core.getApproved(1), ZERO_ADDRESS);
     });
   };
 
   const addsTokenTo = () => {
     it('increases the token recipient balance', async () => {
-      assert.equal(parseBignumber(await this.core.balanceOf(this.to)), '1');
+      assert.equal(await this.core.balanceOf(this.to), '1');
     });
 
     it('sets the token owner to the specified token recipient', async () => {
-      assert.equal(parseBignumber(await this.core.ownerOf(1)), this.to);
+      assert.equal(await this.core.ownerOf(1), this.to);
     });
 
     it('adds the token to the specified token recipient ownedTokens array', async () => {
-      assert.equal(parseBignumber(await this.core.tokenOfOwnerByIndex(this.to, 0)), '1');
+      assert.equal(await this.core.tokenOfOwnerByIndex(this.to, 0), '1');
     });
   };
 
   const removesTokenFrom = () => {
     it('decreases the token owner balance', async () => {
-      assert.equal(parseBignumber(await this.core.balanceOf(this.from)), '1');
+      assert.equal(await this.core.balanceOf(this.from), '1');
     });
 
     it('moves the last token to the sent token position in the specified token owner ownedTokens array', async () => {
-      assert.equal(parseBignumber(await this.core.tokenOfOwnerByIndex(this.from, 0)), '2');
+      assert.equal(await this.core.tokenOfOwnerByIndex(this.from, 0), '2');
     });
   };
 
@@ -71,7 +70,7 @@ contract('DDRMCore', accounts => {
       assert.equal(this.tx.logs[index].event, 'Transfer');
       assert.equal(this.tx.logs[index].args.from, this.from);
       assert.equal(this.tx.logs[index].args.to, this.to);
-      assert.equal(parseBignumber(this.tx.logs[index].args.tokenId), '1');
+      assert.equal(this.tx.logs[index].args.tokenId, '1');
     });
   };
 
@@ -83,15 +82,15 @@ contract('DDRMCore', accounts => {
   describe('deploy', () => {
     context('when successfull', () => {
       it('sets the token name', async () => {
-        assert.equal(parseBignumber(await this.core.name()), 'DDRM');
+        assert.equal(await this.core.name(), 'DDRM');
       });
 
       it('sets the token short code', async () => {
-        assert.equal(parseBignumber(await this.core.symbol()), 'DDRM');
+        assert.equal(await this.core.symbol(), 'DDRM');
       });
 
       it('sets the token ERC20 contract instance', async () => {
-        assert.equal(parseBignumber(await this.core.token()), this.token.address);
+        assert.equal(await this.core.token(), this.token.address);
       });
 
       it('registers the ERC165 interface implementation', async () => {
@@ -111,7 +110,7 @@ contract('DDRMCore', accounts => {
       });
 
       it("doesn't issue initial tokens supply", async () => {
-        assert.equal(parseBignumber(await this.core.totalSupply()), '0');
+        assert.equal(await this.core.totalSupply(), '0');
       });
     });
 
@@ -124,13 +123,13 @@ contract('DDRMCore', accounts => {
 
   describe('name', () => {
     it('gets the token name', async () => {
-      assert.equal(parseBignumber(await this.core.name()), 'DDRM');
+      assert.equal(await this.core.name(), 'DDRM');
     });
   });
 
   describe('symbol', () => {
     it('gets the token shord code', async () => {
-      assert.equal(parseBignumber(await this.core.symbol()), 'DDRM');
+      assert.equal(await this.core.symbol(), 'DDRM');
     });
   });
 
@@ -141,7 +140,7 @@ contract('DDRMCore', accounts => {
 
     context('when the specified token exists', () => {
       it('gets the specified token URI', async () => {
-        assert.equal(parseBignumber(await this.core.tokenURI(1)), '');
+        assert.equal(await this.core.tokenURI(1), '');
       });
     });
 
@@ -170,13 +169,13 @@ contract('DDRMCore', accounts => {
   describe('totalSupply', () => {
     it('gets the total issued tokens amount', async () => {
       await this.core.buyToken(accounts[0], assetId);
-      assert.equal(parseBignumber(await this.core.totalSupply()), '1');
+      assert.equal(await this.core.totalSupply(), '1');
     });
   });
 
   describe('token', () => {
     it('gets the IERC20 token contract instance', async () => {
-      assert.equal(parseBignumber(await this.core.token()), this.token.address);
+      assert.equal(await this.core.token(), this.token.address);
     });
   });
 
@@ -184,8 +183,8 @@ contract('DDRMCore', accounts => {
     context('when successfull', () => {
       it('gets the specified account owned tokens amount', async () => {
         await this.core.buyToken(accounts[0], assetId);
-        assert.equal(parseBignumber(await this.core.balanceOf(accounts[0])), '1');
-        assert.equal(parseBignumber(await this.core.balanceOf(accounts[1])), '0');
+        assert.equal(await this.core.balanceOf(accounts[0]), '1');
+        assert.equal(await this.core.balanceOf(accounts[1]), '0');
       });
     });
 
@@ -203,7 +202,7 @@ contract('DDRMCore', accounts => {
 
     context('when the specified token exists', () => {
       it('gets the specified token owner address', async () => {
-        assert.equal(parseBignumber(await this.core.ownerOf(1)), accounts[0]);
+        assert.equal(await this.core.ownerOf(1), accounts[0]);
       });
     });
 
@@ -223,8 +222,8 @@ contract('DDRMCore', accounts => {
 
     context('when the specified token exists', () => {
       it('gets the specified token approved address', async () => {
-        assert.equal(parseBignumber(await this.core.getApproved(1)), accounts[1]);
-        assert.equal(parseBignumber(await this.core.getApproved(2)), ZERO_ADDRESS);
+        assert.equal(await this.core.getApproved(1), accounts[1]);
+        assert.equal(await this.core.getApproved(2), ZERO_ADDRESS);
       });
     });
 
@@ -243,7 +242,7 @@ contract('DDRMCore', accounts => {
 
     context('when the specified token exists', () => {
       it('gets the specified token end time', async () => {
-        assert.equal(parseBignumber(await this.core.endTimeOf(1)), this.time + duration.days(30));
+        assert.equal(await this.core.endTimeOf(1), this.time + duration.days(30));
       });
     });
 
@@ -261,7 +260,7 @@ contract('DDRMCore', accounts => {
 
     context('when the specified token exists', () => {
       it('gets the specified token end time', async () => {
-        assert.equal(parseBignumber(await this.core.assetOf(1)), assetId);
+        assert.equal(await this.core.assetOf(1), assetId);
       });
     });
 
@@ -279,7 +278,7 @@ contract('DDRMCore', accounts => {
 
     context('when successfull', () => {
       it('gets the token ID that is at the specified index in the allTokens array', async () => {
-        assert.equal(parseBignumber(await this.core.tokenByIndex(0)), '1');
+        assert.equal(await this.core.tokenByIndex(0), '1');
       });
     });
 
@@ -298,17 +297,14 @@ contract('DDRMCore', accounts => {
 
     context('when successfull', () => {
       it('gets the specified asset price', async () => {
-        assert.equal(parseBignumber(await this.core.assetPrice(assetId)), '721');
-        assert.equal(
-          parseBignumber(await this.core.assetPrice(soliditySha3('production').substring(0, 10))),
-          '0'
-        );
+        assert.equal(await this.core.assetPrice(assetId), '721');
+        assert.equal(await this.core.assetPrice(soliditySha3('production').substring(0, 10)), '0');
       });
     });
 
     context('when the invalid asset ID specified (0xffffffff)', () => {
       it('returns 0', async () => {
-        assert.equal(parseBignumber(await this.core.assetPrice('0xffffffff')), '0');
+        assert.equal(await this.core.assetPrice('0xffffffff'), '0');
       });
     });
   });
@@ -328,7 +324,7 @@ contract('DDRMCore', accounts => {
 
     context('when successfull', () => {
       it('gets the token ID that is at the specified index in the specified account ownedTokens array', async () => {
-        assert.equal(parseBignumber(await this.core.tokenOfOwnerByIndex(accounts[0], 0)), '1');
+        assert.equal(await this.core.tokenOfOwnerByIndex(accounts[0], 0), '1');
       });
     });
 
@@ -358,7 +354,7 @@ contract('DDRMCore', accounts => {
 
       it('sets the specified token approved address', async () => {
         transactionInfo(this.tx, 4);
-        assert.equal(parseBignumber(await this.core.getApproved(1)), accounts[1]);
+        assert.equal(await this.core.getApproved(1), accounts[1]);
       });
 
       it('emits an Approval event', async () => {
@@ -366,7 +362,7 @@ contract('DDRMCore', accounts => {
         assert.equal(this.tx.logs[0].event, 'Approval');
         assert.equal(this.tx.logs[0].args.owner, accounts[0]);
         assert.equal(this.tx.logs[0].args.approved, accounts[1]);
-        assert.equal(parseBignumber(this.tx.logs[0].args.tokenId), '1');
+        assert.equal(this.tx.logs[0].args.tokenId, '1');
       });
     });
 
@@ -379,7 +375,7 @@ contract('DDRMCore', accounts => {
 
       it('sets the specified token approved address', async () => {
         transactionInfo(this.tx, 4);
-        assert.equal(parseBignumber(await this.core.getApproved(1)), accounts[1]);
+        assert.equal(await this.core.getApproved(1), accounts[1]);
       });
 
       it('emits an Approval event', async () => {
@@ -387,7 +383,7 @@ contract('DDRMCore', accounts => {
         assert.equal(this.tx.logs[0].event, 'Approval');
         assert.equal(this.tx.logs[0].args.owner, accounts[0]);
         assert.equal(this.tx.logs[0].args.approved, accounts[1]);
-        assert.equal(parseBignumber(this.tx.logs[0].args.tokenId), '1');
+        assert.equal(this.tx.logs[0].args.tokenId, '1');
       });
     });
 
@@ -903,8 +899,8 @@ contract('DDRMCore', accounts => {
       });
 
       it('transfers the ERC20 tokens payment to the core contract', async () => {
-        assert.equal(parseBignumber(await this.token.balanceOf(accounts[0])), '0');
-        assert.equal(parseBignumber(await this.token.balanceOf(this.core.address)), '20');
+        assert.equal(await this.token.balanceOf(accounts[0]), '0');
+        assert.equal(await this.token.balanceOf(this.core.address), '20');
       });
 
       addsTokenTo();
@@ -938,8 +934,8 @@ contract('DDRMCore', accounts => {
       });
 
       it('transfers all owned by the contract ERC20 tokens to the owner', async () => {
-        assert.equal(parseBignumber(await this.token.balanceOf(this.core.address)), '0');
-        assert.equal(parseBignumber(await this.token.balanceOf(creator)), '30');
+        assert.equal(await this.token.balanceOf(this.core.address), '0');
+        assert.equal(await this.token.balanceOf(creator), '30');
       });
     });
 
@@ -995,7 +991,7 @@ contract('DDRMCore', accounts => {
     context('when successfull', () => {
       it('sets the specified asset price', async () => {
         this.tx = await this.core.setAssetPrice(assetId, 721, { from: creator });
-        assert.equal(parseBignumber(await this.core.assetPrice(assetId)), '721');
+        assert.equal(await this.core.assetPrice(assetId), '721');
       });
     });
 
