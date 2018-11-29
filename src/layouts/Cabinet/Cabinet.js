@@ -62,6 +62,7 @@ class Cabinet extends Component {
     return (
       <div className="cabinet">
         <div className="cabinet-wrapper">
+          <div className="bg"></div>
           <div className="page">
             <div className="page-wrapper">
               <div className="sidebar tile">
@@ -87,18 +88,6 @@ class Cabinet extends Component {
               </div>
               <div className="list tile">
                 <div className="list-wrapper">
-                  <div className="el header">
-                    <div className="project">
-                      <div className="header-icon">
-                        <img src={icon3} />
-                      </div>
-                    </div>
-                    <div className="time">
-                      <div className="time-wrapper header-icon">
-                        <img src={iconClock} />
-                      </div>
-                    </div>
-                  </div>
                   <PurchasedList items={purchasedContentList} />
                 </div>
               </div>

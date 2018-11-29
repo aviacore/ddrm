@@ -157,10 +157,11 @@
         width: 100%;
         display: flex;
         flex-flow: row;
+
         .sidebar {
           margin-right: @padding;
           width: 30% - @padding*2;
-          height: 300px;
+          
           background-color: @bg-col;
           .sidebar-wrapper {
             display: flex;
@@ -182,10 +183,19 @@
                 width: 7rem;
                 height: 7rem;
                 border-radius: 3.5rem;
+                background-image: url(../img/pers.png);
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position: center;
               }
             }
             .address {
               padding: @padding 0;
+              span{
+                width: 100%;
+                word-wrap: break-word;
+                text-align: center;
+              }
             }
             .separator {
               border-top: 2px dashed grey;
@@ -200,6 +210,7 @@
                 height: 2rem;
               }
               .number {
+                font-size: 3rem;
                 padding: @padding / 2 0;
               }
             }
@@ -211,55 +222,75 @@
           padding-bottom: @padding*2;
           margin-left: @padding;
           width: 70% - @padding*2;
+          background-color: @bg-col;
 
-          background-color: white;
           .list-wrapper {
             width: 100%;
             display: flex;
             flex-flow: column;
 
             .el {
+              background-color: @el-bg-col;
               margin-bottom: @padding;
               width: 100%;
-              display: flex;
-              flex-flow: row;
-              .project {
+               
+              .el-wrapper{
                 display: flex;
                 flex-flow: row;
-                align-items: center;
-                width: 60% - @padding;
-                margin-right: @padding / 2;
-                .id {
+                .name{
+                  width: 50%;
+                  .proj-name{
+                    font-size: 1.4rem;
+                  }
+                }
+                .time{
+                  width: 50%;
                   display: flex;
-                  justify-content: center;
-                  width: 30%;
-                }
-                .name {
-                  width: 70%;
-                }
-              }
-              .time {
-                color: @niceBlue;
-                font-size: 2rem;
-                width: 40% - @padding;
-                margin-left: @padding / 2;
-                .time-wrapper {
-                  width: 100%;
-                  display: flex;
-                  justify-content: center;
-                }
-              }
-            }
+                  flex-flow: column;
+                  
+                  .label{
+                    display: flex;
+                    flex-flow: row;
+                    width: 100%;
+                    padding: @padding/2;
+                    .icon{
+                      width: 1rem;
+                      height: 1rem;
+                      background-image: url(../img/clock.png);
+                      background-size: 100%;
+                      background-position: center;
+                      background-repeat: no-repeat;
 
-            .el.header {
-              .header-icon > img {
-                width: 2rem;
-                height: 2rem;
-              }
-
-              .project {
-                display: flex;
-                justify-content: center;
+                    }
+                    span{
+                      font-size: 1rem;
+                      padding: 0 @padding/2;
+                    }
+                  }
+                  .digits{
+                    width: 100%;
+                    display: flex;
+                    flex-flow: row;
+                    .block{
+                      width: 25%;
+                      padding: @padding/4;
+                      .panel{
+                        background-color: #232230;
+                        padding: @padding;
+                        width: 100%;
+                        text-align: center;
+                        border-radius: @padding/4;
+                      }
+                      .panel-label{
+                        width: 100%;
+                        text-align: center;
+                        color: @id-col;
+                        font-size: 0.8rem;
+                        padding: @padding/4;
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -287,7 +318,6 @@
 .tile {
   padding: @padding;
   border-radius: @padding;
-  //box-shadow: 10px 5px 40px rgba(150, 150, 150, 0.4);
 }
 
 .modal {
