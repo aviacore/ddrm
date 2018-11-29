@@ -6,6 +6,7 @@ export default ({ items }) =>
     const now = Date.now();
     const estimate = time * 1000 - now;
     const duration = moment.duration(estimate, 'milliseconds');
+    const days = moment(time * 1000).diff(now, 'days');
 
     return (
       <div className="el" key={id}>
@@ -19,7 +20,7 @@ export default ({ items }) =>
         </div>
         <div className="time tile">
           <div className="time-wrapper">
-            <span>{`${duration.hours()} Days, ${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}</span>
+            <span>{`${days} Days, ${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}</span>
           </div>
         </div>
       </div>
