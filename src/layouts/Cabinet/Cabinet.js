@@ -9,6 +9,7 @@ import PurchasedList from './PurchasedList';
 import iconBalance from '../../img/icon4.png';
 import icon3 from '../../img/icon3.png';
 import iconClock from '../../img/clock.png';
+import {ContractData} from "drizzle-react-components";
 
 class Cabinet extends Component {
   constructor(props, context) {
@@ -22,7 +23,7 @@ class Cabinet extends Component {
   }
 
   render() {
-    const { balance, account, user } = this.props;
+    const { account, user } = this.props;
 
     console.log(user.avatarUrl);
     return (
@@ -42,7 +43,11 @@ class Cabinet extends Component {
                   <div className="balance">
                     <img src={iconBalance} className="icon" />
                     <div className="number">
-                      <span>{this.web3.utils.fromWei(balance, 'ether')}</span>
+                      <ContractData
+                        contract="ERC20Example"
+                        method="balanceOf"
+                        methodArgs={[account]}
+                      />
                     </div>
                   </div>
                 </div>
@@ -61,7 +66,6 @@ class Cabinet extends Component {
                       </div>
                     </div>
                   </div>
-
                   <PurchasedList items={user.purchasedContentList} />
                 </div>
               </div>
