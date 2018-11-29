@@ -13,7 +13,7 @@ export default ({ items }) =>
       </div>
       <div className="time tile">
         <div className="time-wrapper">
-          <span>{time}</span>
+          <span>{new Date(time*1000).toDateString()}</span>
         </div>
       </div>
     </div>
