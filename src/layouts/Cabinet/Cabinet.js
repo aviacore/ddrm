@@ -6,7 +6,6 @@ import { soliditySha3 } from 'web3-utils';
 import { times } from 'lodash';
 
 import { changeTheme, fetchContentList } from '../Catalog/actions';
-import LightToggler from '../LightToggler';
 import PurchasedList from './PurchasedList';
 
 import iconBalance from '../../img/icon4.png';
@@ -60,8 +59,6 @@ class Cabinet extends Component {
       return interception ? [...res, { ...cur, time: interception.time }] : res;
     }, []);
 
-    console.log(avatarUrl);
-
     return (
       <div className="cabinet">
         <div className="cabinet-wrapper">
@@ -107,7 +104,6 @@ class Cabinet extends Component {
               </div>
             </div>
           </div>
-          <LightToggler />
         </div>
       </div>
     );

@@ -3,18 +3,16 @@
 @fontSize: 1.2rem;
 
 /*Themes*/
-@d-bg-block: #2a2a2a;
-@d-bg-el: #484848;
-@l-bg: white;
-@l-text: black;
-@d-text: white;
+@bg-col: #222229;
+@el-bg-col: #323036;
 @niceBlue: #5e77ff;
+@id-col: #a1bcd3;
 
 .admin {
   font-size: @fontSize;
   width: 100vw;
   height: 100vh;
-  background-image: url(../img/backgr-light.png);
+  background-image: url(../img/backgr.jpg);
   position: relative;
   background-color: transparent;
   padding-top: 10vh;
@@ -24,7 +22,7 @@
   font-size: @fontSize;
   width: 100vw;
   height: 100vh;
-  background-image: url(../img/backgr-light.png);
+  background-image: url(../img/backgr.jpg);
   .catalog-wrapper {
     width: 100%;
     height: 100%;
@@ -40,17 +38,19 @@
       .list-wrapper {
         width: 100%;
         height: 80%;
-        background-color: @l-bg;
+        background-color: @bg-col;
         display: flex;
         flex-flow: column;
         align-items: center;
         padding: @padding*3 @padding*2;
         .el {
-          width: 80%;
+          padding: @padding/2;
+          width: 90%;
           display: flex;
           flex-flow: row;
           margin-bottom: @padding;
           font-size: 1.3rem;
+          background-color: @el-bg-col;
           .id,
           .name,
           .price,
@@ -60,20 +60,29 @@
             justify-content: center;
           }
           .id {
-            width: 10%;
+            width: 5%;
+            span{
+              color: @id-col;
+            }
+            
           }
           .name {
-            width: 40%;
+            width: 55%;
+            display: flex;
+            justify-content: flex-start;
           }
           .price {
-            width: 30%;
-            color: @niceBlue;
+            width: 25%;
+            display: flex;
+            justify-content: flex-end;
+            font-weight: 700;
           }
           .button {
             width: 20%;
+            align-items: center;
             display: flex;
             justify-content: center;
-            img {
+            svg {
               width: 1.4rem;
               height: 0.7rem;
             }
@@ -81,17 +90,40 @@
         }
         .el:hover {
           cursor: pointer;
-          background-color: #ededed;
+          background-color: @el-bg-col + #111;
         }
 
         .el.header {
           background-color: transparent;
           cursor: auto;
+
           .name,
           .price {
-            > img {
+            display: flex;
+            img {
               width: 1.8rem;
               height: 1.8rem;
+            }
+            span{
+              font-weight: 500;
+              color: @id-col;
+              font-size: 1.2rem;
+              padding: @padding/3;
+            }
+          }
+          .name{
+            .name-wrapper{
+              display: flex;
+              flex-flow: column;
+              align-items: center;
+            }
+          }
+          .price{
+            .price-wrapper{
+              display: flex;
+              flex-flow: column;
+              align-items: center;
+              
             }
           }
         }
@@ -100,25 +132,7 @@
         }
       }
     }
-  }
-}
 
-.catalog.d-theme {
-  background-image: url(../img/backgr-dark.jpg);
-
-  .list-wrapper {
-    background-color: @d-bg-block;
-    .el {
-      color: @d-text;
-      background-color: @d-bg-el;
-    }
-    .el.header {
-      background-color: inherit;
-      color: @d-text;
-    }
-    .el:hover {
-      background-color: #333;
-    }
   }
 }
 
@@ -126,7 +140,7 @@
   font-size: @fontSize;
   width: 100vw;
   height: 100vh;
-  background-image: url(../img/backgr-light.png);
+  background-image: url(../img/backgr.jpg);
   .cabinet-wrapper {
     width: 100%;
     height: 100%;
@@ -147,7 +161,7 @@
           margin-right: @padding;
           width: 30% - @padding*2;
           height: 300px;
-          background-color: @l-bg;
+          background-color: @bg-col;
           .sidebar-wrapper {
             display: flex;
             flex-flow: column;
@@ -256,6 +270,8 @@
 }
 
 .bg {
+  background-size: cover;
+  background-image: url(../img/grid.png);
   background-repeat: no-repeat;
   width: 100%;
   height: 100%;
@@ -266,29 +282,12 @@
   left: 0;
   background-color: transparent;
 }
-.bg:nth-of-type(1) {
-  background-image: url(../img/f1.png);
-  background-position: 50% 100%;
-  background-size: 100%;
-  z-index: 3;
-}
-.bg:nth-of-type(2) {
-  background-image: url(../img/f2.png);
-  background-position: 50% 90%;
-  background-size: 110%;
-  z-index: 2;
-}
-.bg:nth-of-type(3) {
-  background-image: url(../img/f3.png);
-  background-position: 50% 80%;
-  background-size: 110%;
-  z-index: 1;
-}
+
 
 .tile {
   padding: @padding;
   border-radius: @padding;
-  box-shadow: 10px 5px 40px rgba(150, 150, 150, 0.4);
+  //box-shadow: 10px 5px 40px rgba(150, 150, 150, 0.4);
 }
 
 .modal {
@@ -310,10 +309,13 @@
     z-index: 11;
     background-color: rgba(0, 0, 0, 0.5);
   }
+  .background:hover {
+    cursor: pointer;
+  }
   .modal-content {
     z-index: 12;
     width: @pageWidth;
-    background-color: @l-bg;
+    background-color: @bg-col;
     display: flex;
     align-items: center;
     height: 80vh;
@@ -371,7 +373,7 @@
         button {
           font-size: 1.5rem;
           background-color: @niceBlue;
-          color: @d-text;
+          //color: ;
           border: none;
           border-radius: @padding;
           padding: @padding / 2 @padding;
@@ -383,13 +385,12 @@
       }
     }
   }
-}
-.background:hover {
-  cursor: pointer;
+
 }
 
+
 header {
-  background-image: url('../img/backgr-light.png');
+  background-color: transparent;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -405,10 +406,11 @@ header {
     width: @pageWidth;
     .left {
       div.logo {
-        width: 50px;
-        height: 50px;
-        border-radius: 25px;
-        background-color: grey;
+        width: 5rem;
+        height: 5rem;
+        background-image: url(../img/logo.png);
+        background-size: 100%;
+        background-repeat: no-repeat;
       }
     }
     .right {
@@ -424,39 +426,7 @@ header {
             height: 3rem;
           }
         }
-        .link-to-catalog {
-        }
-        .link-to-cabinet {
-        }
       }
     }
-  }
-}
-
-header.d-theme {
-  background-image: url('../img/backgr-dark.jpg');
-}
-
-.light-toggler-wrapper {
-  z-index: 5;
-  position: fixed;
-  bottom: 10vh;
-  right: 5vw;
-
-  button {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 1rem;
-    border: none;
-  }
-  button:hover {
-    cursor: pointer;
-  }
-  .light-toggler.l-theme {
-    background-color: black;
-  }
-  .light-toggler.d-theme {
-    border: 2px solid black;
-    background-color: white;
   }
 }

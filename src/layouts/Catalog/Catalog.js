@@ -4,7 +4,6 @@ import AssetsList from './AssetsList';
 import ChosenModal from './ChosenModal';
 import { fetchContentList } from './actions';
 
-import LightToggler from '../LightToggler';
 
 import icon3 from '../../img/icon3.png';
 import icon4 from '../../img/icon4.png';
@@ -21,17 +20,21 @@ class CatalogContainer extends Component {
       <div className={lightTheme ? 'catalog' : 'catalog d-theme'}>
         <div className="catalog-wrapper">
           <div className="bg" />
-          <div className="bg" />
-          <div className="bg" />
           <div className="list">
             <div className="list-wrapper tile">
               <div className="el header">
                 <div className="id" />
                 <div className="name">
-                  <img src={icon3} />
+                  <div className="name-wrapper">
+                    <img src={icon3} />
+                    <span>Project</span>
+                  </div>
                 </div>
                 <div className="price">
-                  <img src={icon4} />
+                  <div className="price-wrapper">
+                    <img src={icon4} />
+                    <span>Price</span>
+                  </div>
                 </div>
                 <div className="button" />
               </div>
@@ -40,7 +43,7 @@ class CatalogContainer extends Component {
             </div>
           </div>
 
-          <LightToggler />
+          
 
           {chosenContentId && <ChosenModal />}
         </div>
