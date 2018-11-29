@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { drizzleConnect } from 'drizzle-react';
 import { ContractData } from 'drizzle-react-components';
 import { soliditySha3 } from 'web3-utils';
-import {times} from 'lodash';
+import { times } from 'lodash';
 
 import { changeTheme, fetchContentList } from '../Catalog/actions';
 import LightToggler from '../LightToggler';
@@ -29,15 +29,14 @@ class Cabinet extends Component {
     const { account } = this.props;
     const balance = await this.DDRMCore.methods.balanceOf(account).call();
 
-    const contractTokens = await Promise.all(
-      times(balance).map(async (val, index) => {
-        const tokenId = await this.DDRMCore.methods.tokenOfOwnerByIndex(account, index).call();
+    const requests = times(balance, async index => {
+      const tokenId = await this.DDRMCore.methods.tokenOfOwnerByIndex(account, index).call();
+      const [time, hash] = await Promise.all(this.getTokenInfo(tokenId));
 
-        const [time, hash] = await Promise.all(this.getTokenInfo(tokenId));
+      return { time, hash };
+    });
 
-        return { time, hash };
-      })
-    );
+    const contractTokens = await Promise.all(requests);
 
     this.setState({ contractTokens });
   }
@@ -56,14 +55,9 @@ class Cabinet extends Component {
 
     const purchasedContentList = contentList.reduce((res, cur) => {
       const hash = soliditySha3(cur.id).substring(0, 10);
-
       const interception = this.state.contractTokens.find(token => token.hash === hash);
 
-      if (interception) {
-        res.push({...cur, time: interception.time});
-      }
-
-      return res;
+      return interception ? [...res, { ...cur, time: interception.time }] : res;
     }, []);
 
     console.log(avatarUrl);
