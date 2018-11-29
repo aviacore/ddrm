@@ -46,47 +46,56 @@
         .el {
           padding: @padding/2;
           width: 90%;
-          display: flex;
-          flex-flow: row;
+          
           margin-bottom: @padding;
           font-size: 1.3rem;
           background-color: @el-bg-col;
-          .id,
-          .name,
-          .price,
-          .button {
-            padding: @padding / 2;
+          
+          .el-wrapper{
             display: flex;
-            justify-content: center;
-          }
-          .id {
-            width: 5%;
-            span{
-              color: @id-col;
+            flex-flow: row;
+            width: 100%;
+            .id,
+            .name,
+            .price,
+            .button {
+              padding: @padding / 2;
+              display: flex;
+              justify-content: center;
             }
-            
-          }
-          .name {
-            width: 55%;
-            display: flex;
-            justify-content: flex-start;
-          }
-          .price {
-            width: 25%;
-            display: flex;
-            justify-content: flex-end;
-            font-weight: 700;
-          }
-          .button {
-            width: 20%;
-            align-items: center;
-            display: flex;
-            justify-content: center;
-            svg {
-              width: 1.4rem;
-              height: 0.7rem;
+            .id {
+              width: 5%;
+              span{
+                color: @id-col;
+              }
+
+            }
+            .name {
+              width: 55%;
+              display: flex;
+              justify-content: flex-start;
+            }
+            .price {
+              width: 25%;
+              display: flex;
+              justify-content: flex-end;
+              font-weight: 700;
+            }
+            .button {
+              width: 20%;
+              align-items: center;
+              display: flex;
+              justify-content: center;
+              svg {
+                width: 1.4rem;
+                height: 0.7rem;
+              }
             }
           }
+          .modal-placeholder{
+            width: 100%;
+          }
+
         }
         .el:hover {
           cursor: pointer;
@@ -280,13 +289,22 @@
                         width: 100%;
                         text-align: center;
                         border-radius: @padding/4;
+                        font-weight: 700;
+                        color: @niceBlue;
                       }
+                      
                       .panel-label{
+                        
                         width: 100%;
                         text-align: center;
                         color: @id-col;
                         font-size: 0.8rem;
                         padding: @padding/4;
+                      }
+                    }
+                    .block:last-child{
+                      .panel{
+                        color: red;
                       }
                     }
                   }
@@ -321,97 +339,30 @@
 }
 
 .modal {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .background {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    z-index: 11;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  .background:hover {
-    cursor: pointer;
-  }
-  .modal-content {
-    z-index: 12;
-    width: @pageWidth;
-    background-color: @bg-col;
+  border-top: 2px dashed grey;
+  padding: @padding;
+  .modal-wrapper{
     display: flex;
-    align-items: center;
-    height: 80vh;
-    .modal-content-wrapper {
-      width: 100%;
-
+    flex-flow: row;
+    .descr{
+      width: 60%;
+    }
+    .button{
       display: flex;
-      flex-flow: column;
-      align-items: center;
-
-      .name,
-      .hash,
-      .price,
-      .description,
-      .button {
-        padding: @padding / 2 0;
+      justify-content: center;
+      width: 40%;
+      button{
+        z-index: 6;
+        padding: @padding/2 @padding*2;
+        font-weight: 700;
+        background-color: @niceBlue;
+        border: none;
+        border-radius: @padding/2;
+        font-size: 1.2rem;
       }
-
-      .name {
-        h2 {
-          text-align: center;
-        }
-        padding: 0 @padding;
-      }
-      .hash {
-        span {
-          width: 100%;
-          border-top: 2px dashed grey;
-        }
-      }
-      .price {
-        display: flex;
-        flex-flow: row;
-        align-items: center;
-        .icon,
-        .number {
-          padding: 0 @padding;
-        }
-        .icon {
-          img {
-            width: 2rem;
-            height: 2rem;
-          }
-        }
-      }
-      .description {
-        display: flex;
-        flex-flow: column;
-        align-items: center;
-        h3 {
-          text-align: center;
-        }
-      }
-      .button {
-        button {
-          font-size: 1.5rem;
-          background-color: @niceBlue;
-          //color: ;
-          border: none;
-          border-radius: @padding;
-          padding: @padding / 2 @padding;
-        }
-        button:hover {
-          cursor: pointer;
-          background-color: @niceBlue + #111;
-        }
+      button:hover{
+        cursor: pointer;
+        background-color: @niceBlue + #111;
       }
     }
   }

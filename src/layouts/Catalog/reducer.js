@@ -10,7 +10,6 @@ const initialState = {
   data: [],
   contentList: [],
   chosenContentId: null,
-  lightTheme: true,
 
   user: {
     username: 'Jonh Prodman',
