@@ -61,6 +61,7 @@ class Cabinet extends Component {
     }, []);
 
     console.log(avatarUrl);
+
     return (
       <div className="cabinet">
         <div className="cabinet-wrapper">
