@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { buyContent, changeTheme, fetchContentList, resetContentChoice } from './actions';
+import { buyContent } from './actions';
 import { drizzleConnect } from 'drizzle-react';
 import { soliditySha3 } from 'web3-utils';
-import { ContractData } from 'drizzle-react-components';
 import PropTypes from 'prop-types';
 
 class ChosenModal extends Component {
@@ -32,7 +31,7 @@ class ChosenModal extends Component {
       <div className="modal">
         <div className="modal-wrapper">
           <div className="descr">
-            <span></span>
+            <span />
           </div>
           <div className="button">
             <button type="button" onClick={this.buyToken}>

@@ -16,10 +16,13 @@
   font-size: @fontSize;
   width: 100vw;
   height: 100vh;
-  background-image: url(../img/backgr.jpg);
   position: relative;
   background-color: transparent;
   padding-top: @page-padding-top;
+  color: #000;
+  input{
+    color: #000;
+  }
 }
 
 .catalog {
@@ -49,11 +52,11 @@
         .el {
           padding: @padding/2;
           width: 90%;
-          
+
           margin-bottom: @padding;
           font-size: 1.3rem;
           background-color: @el-bg-col;
-          
+
           .el-wrapper{
             display: flex;
             flex-flow: row;
@@ -135,7 +138,7 @@
               display: flex;
               flex-flow: column;
               align-items: center;
-              
+
             }
           }
         }
@@ -173,8 +176,8 @@
         .sidebar {
           margin-right: @padding;
           width: 30% - @padding*2;
-          
-          
+
+
           .sidebar-wrapper {
             background-color: @bg-col;
             display: flex;
@@ -252,7 +255,7 @@
               background-color: @el-bg-col;
               margin-bottom: @padding;
               width: 100%;
-               
+
               .el-wrapper{
                 display: flex;
                 flex-flow: row;
@@ -266,7 +269,7 @@
                   width: 50%;
                   display: flex;
                   flex-flow: column;
-                  
+
                   .label{
                     display: flex;
                     flex-flow: row;
@@ -303,9 +306,9 @@
                         font-weight: 700;
                         color: @niceBlue;
                       }
-                      
+
                       .panel-label{
-                        
+
                         width: 100%;
                         text-align: center;
                         color: @id-col;

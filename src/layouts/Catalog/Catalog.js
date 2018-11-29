@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { drizzleConnect } from 'drizzle-react';
 import AssetsList from './AssetsList';
-import ChosenModal from './ChosenModal';
 import { fetchContentList } from './actions';
-
 
 import icon3 from '../../img/icon3.png';
 import icon4 from '../../img/icon4.png';
@@ -14,7 +12,6 @@ class CatalogContainer extends Component {
   }
 
   render() {
-
     return (
       <div className="catalog">
         <div className="catalog-wrapper">
@@ -39,7 +36,6 @@ class CatalogContainer extends Component {
                   <div className="button" />
                 </div>
               </div>
-
               <AssetsList />
             </div>
           </div>
