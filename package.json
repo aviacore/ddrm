@@ -136,6 +136,7 @@
     "drizzle": "^1.2.5",
     "drizzle-react": "^1.1.1",
     "drizzle-react-components": "^1.2.0",
+    "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

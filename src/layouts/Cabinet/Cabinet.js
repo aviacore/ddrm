@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { drizzleConnect } from 'drizzle-react';
 import { ContractData } from 'drizzle-react-components';
 import { soliditySha3 } from 'web3-utils';
+import {times} from 'lodash';
 
 import { changeTheme, fetchContentList } from '../Catalog/actions';
 import LightToggler from '../LightToggler';
@@ -23,14 +24,13 @@ class Cabinet extends Component {
   state = { contractTokens: [] };
 
   async componentDidMount() {
-    const { account } = this.props;
-
     this.props.fetchContentList();
 
-    let balance = await this.DDRMCore.methods.balanceOf(account).call();
+    const { account } = this.props;
+    const balance = await this.DDRMCore.methods.balanceOf(account).call();
 
     const contractTokens = await Promise.all(
-      new Array(balance).map(async (val, index) => {
+      times(balance).map(async (val, index) => {
         const tokenId = await this.DDRMCore.methods.tokenOfOwnerByIndex(account, index).call();
 
         const [time, hash] = await Promise.all(this.getTokenInfo(tokenId));
