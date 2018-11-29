@@ -26,14 +26,17 @@ export default ({ items }) =>
                 <div className="panel">{days}</div>
                 <div className="panel-label">days</div>
               </div>
+              <div className="sep">:</div>
               <div className="block">
                 <div className="panel">{duration.hours()}</div>
                 <div className="panel-label">hours</div>
               </div>
+              <div className="sep">:</div>
               <div className="block">
                 <div className="panel">{duration.minutes()}</div>
                 <div className="panel-label">minutes</div>
               </div>
+              <div className="sep">:</div>
               <div className="block">
                 <div className="panel">{duration.seconds()}</div>
                 <div className="panel-label">seconds</div>

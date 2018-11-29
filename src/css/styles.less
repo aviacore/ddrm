@@ -2,11 +2,15 @@
 @pageWidth: 70%;
 @fontSize: 1.2rem;
 
+@page-padding-top: 12vh;
+
 /*Themes*/
 @bg-col: #222229;
 @el-bg-col: #323036;
 @niceBlue: #5e77ff;
 @id-col: #a1bcd3;
+@niceRed: #fd6060;
+@dashed-line-color: #5b50ba;
 
 .admin {
   font-size: @fontSize;
@@ -15,7 +19,7 @@
   background-image: url(../img/backgr.jpg);
   position: relative;
   background-color: transparent;
-  padding-top: 10vh;
+  padding-top: @page-padding-top;
 }
 
 .catalog {
@@ -30,7 +34,7 @@
     justify-content: center;
     position: relative;
     background-color: transparent;
-    padding-top: 10vh;
+    padding-top: @page-padding-top;
 
     .list {
       width: @pageWidth;
@@ -64,21 +68,21 @@
               justify-content: center;
             }
             .id {
-              width: 5%;
+              width: 10%;
               span{
                 color: @id-col;
               }
 
             }
             .name {
-              width: 55%;
+              width: 70%;
               display: flex;
               justify-content: flex-start;
             }
             .price {
-              width: 25%;
+              width: 10%;
               display: flex;
-              justify-content: flex-end;
+              justify-content: center;
               font-weight: 700;
             }
             .button {
@@ -157,7 +161,7 @@
     justify-content: center;
     position: relative;
     background-color: transparent;
-    padding-top: 10vh;
+    padding-top: @page-padding-top;
 
     .page {
       width: @pageWidth;
@@ -171,8 +175,9 @@
           margin-right: @padding;
           width: 30% - @padding*2;
           
-          background-color: @bg-col;
+          
           .sidebar-wrapper {
+            background-color: @bg-col;
             display: flex;
             flex-flow: column;
             align-items: center;
@@ -207,7 +212,7 @@
               }
             }
             .separator {
-              border-top: 2px dashed grey;
+              border-top: 2px dashed @dashed-line-color;
             }
             .balance {
               padding: @padding 0;
@@ -219,8 +224,14 @@
                 height: 2rem;
               }
               .number {
+                display: flex;
+                flex-flow: column;
+                align-items: center;
                 font-size: 3rem;
                 padding: @padding / 2 0;
+                .token-name{
+                  font-size: 2rem;
+                }
               }
             }
           }
@@ -280,6 +291,7 @@
                     width: 100%;
                     display: flex;
                     flex-flow: row;
+                    justify-content: center;
                     .block{
                       width: 25%;
                       padding: @padding/4;
@@ -302,9 +314,12 @@
                         padding: @padding/4;
                       }
                     }
+                    .sep{
+                      padding: @padding 0;
+                    }
                     .block:last-child{
                       .panel{
-                        color: red;
+                        color: @niceRed;
                       }
                     }
                   }
@@ -339,7 +354,7 @@
 }
 
 .modal {
-  border-top: 2px dashed grey;
+  border-top: 2px dashed @dashed-line-color;
   padding: @padding;
   .modal-wrapper{
     display: flex;
@@ -405,6 +420,16 @@ header {
           .icon {
             width: 3rem;
             height: 3rem;
+          }
+        }
+        .link-to-catalog:hover{
+          svg circle#Oval {
+            fill: #5e77ff + #222;
+          }
+        }
+        .link-to-cabinet:hover{
+          svg g#Desktop-HD-Copy-4{
+            fill: #afbbff + #222;
           }
         }
       }

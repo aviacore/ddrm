@@ -65,8 +65,8 @@ class Cabinet extends Component {
           <div className="bg"></div>
           <div className="page">
             <div className="page-wrapper">
-              <div className="sidebar tile">
-                <div className="sidebar-wrapper">
+              <div className="sidebar">
+                <div className="sidebar-wrapper tile">
                   <div className="avatar">
                     <div style={{ backgroundImage: avatarUrl }} />
                   </div>
@@ -82,6 +82,7 @@ class Cabinet extends Component {
                         method="balanceOf"
                         methodArgs={[account]}
                       />
+                      <span className="token-name"> NKMS</span>
                     </div>
                   </div>
                 </div>
