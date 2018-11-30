@@ -13,7 +13,6 @@ class ChosenModal extends Component {
   }
 
   buyToken = async () => {
-    console.log(this.props.account, soliditySha3(this.props.chosenItem.id).substring(0, 10));
     try {
       const tokenId = soliditySha3(this.props.chosenItem.id).substring(0, 10);
       const assetPrice = await this.DDRMCore.methods.assetPrice(tokenId).call();

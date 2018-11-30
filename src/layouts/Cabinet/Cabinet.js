@@ -52,11 +52,10 @@ class Cabinet extends Component {
       contentList
     } = this.props;
 
-    const purchasedContentList = contentList.reduce((res, cur) => {
-      const hash = soliditySha3(cur.id).substring(0, 10);
-      const interception = this.state.contractTokens.find(token => token.hash === hash);
+    const purchasedContentList = this.state.contractTokens.reduce((res, cur) => {
+      const interception = contentList.find(token => soliditySha3(token.id).substring(0, 10)=== cur.hash);
 
-      return interception ? [...res, { ...cur, time: interception.time }] : res;
+      return interception ? [...res, { ...interception, time: cur.time }] : res;
     }, []);
 
     return (
