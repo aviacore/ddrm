@@ -12,6 +12,10 @@
 @niceRed: #fd6060;
 @dashed-line-color: #5b50ba;
 
+body{
+  background-image: url(../img/backgr.jpg);
+}
+
 .admin {
   font-size: @fontSize;
   width: 100vw;
@@ -28,8 +32,8 @@
 .catalog {
   font-size: @fontSize;
   width: 100vw;
-  height: 100vh;
-  background-image: url(../img/backgr.jpg);
+  height: 100%;
+  
   .catalog-wrapper {
     width: 100%;
     height: 100%;
@@ -41,7 +45,7 @@
 
     .list {
       width: @pageWidth;
-      z-index: 5;
+      margin-bottom: @padding*5;
       .list-wrapper {
         width: 100%;
         background-color: @bg-col;
@@ -154,8 +158,7 @@
 .cabinet {
   font-size: @fontSize;
   width: 100vw;
-  height: 100vh;
-  background-image: url(../img/backgr.jpg);
+  height: 100%;
   .cabinet-wrapper {
     width: 100%;
     height: 100%;
@@ -167,7 +170,6 @@
 
     .page {
       width: @pageWidth;
-      z-index: 5;
       .page-wrapper {
         width: 100%;
         display: flex;
@@ -245,7 +247,7 @@
           margin-left: @padding;
           width: 70% - @padding*2;
           background-color: @bg-col;
-
+          margin-bottom: @padding*5;
           .list-wrapper {
             width: 100%;
             display: flex;
@@ -336,7 +338,7 @@
 }
 
 .bg {
-  background-size: cover;
+  background-size: 100%;
   background-image: url(../img/grid.png);
   background-repeat: no-repeat;
   width: 100%;
@@ -347,6 +349,7 @@
   bottom: 0;
   left: 0;
   background-color: transparent;
+  z-index:0;
 }
 
 
@@ -369,7 +372,6 @@
       justify-content: center;
       width: 40%;
       button{
-        z-index: 6;
         padding: @padding/2 @padding*2;
         font-weight: 700;
         background-color: @niceBlue;
@@ -387,12 +389,14 @@
 }
 
 
+@header-width: 96vw;
 header {
-  background-color: transparent;
-  width: 100vw;
+  background-color: rgba(0,0,0,.3);
+  width: @header-width;
+  margin: 0 (100-@header-width)/2;
   display: flex;
   justify-content: center;
-  z-index: 5;
+  z-index: 1;
   position: fixed;
   top: 0;
   left: 0;

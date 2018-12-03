@@ -61,7 +61,7 @@ class Cabinet extends Component {
     return (
       <div className="cabinet">
         <div className="cabinet-wrapper">
-          <div className="bg"></div>
+          
           <div className="page">
             <div className="page-wrapper">
               <div className="sidebar">
