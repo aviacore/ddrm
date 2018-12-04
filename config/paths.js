@@ -33,7 +33,7 @@ const getPublicUrl = appPackageJson => envPublicUrl || require(appPackageJson).h
 function getServedPath(appPackageJson) {
   const publicUrl = getPublicUrl(appPackageJson);
   const servedUrl = envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : '/');
-  return ensureSlash(servedUrl, true);
+  return ensureSlash('/', true);
 }
 
 // config after eject: we're in ./config/
