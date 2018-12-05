@@ -9,5 +9,7 @@ export const data = [
 
 export const purchasedData = [setTime(data[0], '20min'), setTime(data[1], '30min')];
 
-export const getData = () => new Promise((resolve, reject) => setTimeout(() => resolve(data)), 100);
-export const getPurchasedData = () => new Promise((resolve, reject) => setTimeout(() => resolve(purchasedData)), 100);
+export const getData = () =>
+  new Promise((resolve, reject) => setTimeout(() => resolve(data)), 100);
+export const getPurchasedData = () =>
+  new Promise((resolve, reject) => setTimeout(() => resolve(purchasedData)), 100);

@@ -15,7 +15,6 @@ class CatalogContainer extends Component {
     return (
       <div className="catalog">
         <div className="catalog-wrapper">
-          
           <div className="list">
             <div className="list-wrapper tile">
               <div className="el header">
@@ -37,7 +36,6 @@ class CatalogContainer extends Component {
                 </div>
               </div>
               <AssetsList />
-              
             </div>
           </div>
         </div>

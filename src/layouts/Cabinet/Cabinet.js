@@ -53,7 +53,9 @@ class Cabinet extends Component {
     } = this.props;
 
     const purchasedContentList = this.state.contractTokens.reduce((res, cur) => {
-      const interception = contentList.find(token => soliditySha3(token.id).substring(0, 10)=== cur.hash);
+      const interception = contentList.find(
+        token => soliditySha3(token.id).substring(0, 10) === cur.hash
+      );
 
       return interception ? [...res, { ...interception, time: cur.time }] : res;
     }, []);
@@ -61,7 +63,6 @@ class Cabinet extends Component {
     return (
       <div className="cabinet">
         <div className="cabinet-wrapper">
-          
           <div className="page">
             <div className="page-wrapper">
               <div className="sidebar">

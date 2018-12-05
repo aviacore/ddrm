@@ -7,21 +7,20 @@ export default ({ items }) =>
     const estimate = time * 1000 - now;
     const duration = moment.duration(estimate, 'milliseconds');
     const days = moment(time * 1000).diff(now, 'days');
-    
+
     return (
       <div className="el tile" key={id}>
         <div className="el-wrapper">
           <div className="name">
             <span className="proj-name">{name}</span>
-            <span className="proj-descr"></span>
+            <span className="proj-descr" />
           </div>
           <div className="time">
             <div className="label">
-              <div className="icon"></div>
+              <div className="icon" />
               <span>You have left</span>
             </div>
             <div className="digits">
-
               <div className="block">
                 <div className="panel">{days}</div>
                 <div className="panel-label">days</div>
@@ -41,7 +40,6 @@ export default ({ items }) =>
                 <div className="panel">{duration.seconds()}</div>
                 <div className="panel-label">seconds</div>
               </div>
-
             </div>
           </div>
         </div>
